@@ -91,15 +91,23 @@ export default async function HomePage() {
           {featuredEvents && featuredEvents.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {featuredEvents.map((event) => (
-                <Link key={event._id} href={`/whats-on/${event.slug.current}`} className="group">
+                <Link
+                  key={event._id}
+                  href={event.slug?.current ? `/whats-on/${event.slug.current}` : '/whats-on'}
+                  className="group"
+                >
                   <div className="bg-white shadow-card rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                    {event.image && (
+                    {event.image?.asset ? (
                       <div className="aspect-video bg-gray-100">
                         <img
                           src={urlFor(event.image).url()}
                           alt={event.image.alt || event.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
+                      </div>
+                    ) : (
+                      <div className="aspect-video bg-gold-pale flex items-center justify-center">
+                        <span className="text-ink-muted text-sm">No image</span>
                       </div>
                     )}
                     <div className="p-4 sm:p-6">
@@ -136,15 +144,23 @@ export default async function HomePage() {
           {communityGroups && communityGroups.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {communityGroups.map((group) => (
-                <Link key={group._id} href={`/community/${group.slug.current}`} className="group">
+                <Link
+                  key={group._id}
+                  href={group.slug?.current ? `/community/${group.slug.current}` : '/community'}
+                  className="group"
+                >
                   <div className="bg-white shadow-card rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                    {group.image && (
+                    {group.image?.asset ? (
                       <div className="aspect-video bg-gray-100">
                         <img
                           src={urlFor(group.image).url()}
                           alt={group.image.alt || group.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
+                      </div>
+                    ) : (
+                      <div className="aspect-video bg-gold-pale flex items-center justify-center">
+                        <span className="text-ink-muted text-sm">No image</span>
                       </div>
                     )}
                     <div className="p-4 sm:p-6">
@@ -180,15 +196,23 @@ export default async function HomePage() {
           {latestPosts && latestPosts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {latestPosts.map((post) => (
-                <Link key={post._id} href={`/news/${post.slug.current}`} className="group">
+                <Link
+                  key={post._id}
+                  href={post.slug?.current ? `/news/${post.slug.current}` : '/news'}
+                  className="group"
+                >
                   <div className="bg-white shadow-card rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                    {post.heroImage && (
+                    {post.heroImage?.asset ? (
                       <div className="aspect-video bg-gray-100">
                         <img
                           src={urlFor(post.heroImage).url()}
                           alt={post.heroImage.alt || post.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
+                      </div>
+                    ) : (
+                      <div className="aspect-video bg-gold-pale flex items-center justify-center">
+                        <span className="text-ink-muted text-sm">No image</span>
                       </div>
                     )}
                     <div className="p-4 sm:p-6">
