@@ -1,0 +1,30 @@
+@theme {
+
+   --color-red: #c51718;
+   --color-red-dark: #9e1213;
+   --color-red-light: #e0393a;
+
+   --color-gold: #D4A24C;
+   --color-gold-light: #E2BC78;
+   --color-gold-pale: #F1E6CE;
+
+   --color-bg: #FAF7F2;
+   /* page background (warm off-white) */
+   --color-paper: #FFFDF8;
+   /* cards / surfaces */
+   --color-ink: #2A2723;
+   /* main text */
+   --color-ink-muted: #5A554E;
+   /* secondary text */
+   --color-line: #C9C2B6;
+   /* borders */
+   --color-line-soft: #E4DED1;
+   /* faint borders */
+
+   --font-serif: "Libre Franklin", "Franklin Gothic", "Franklin Gothic Medium", Arial, sans-serif;
+   /* headings */
+   --font-sans: "Libre Franklin", "Franklin Gothic", "Franklin Gothic Medium", Arial, sans-serif;
+   /* body */
+
+   --shadow-card: 0 1px 0 rgba(40, 30, 20, .04), 0 8px 24px -16px rgba(40, 30, 20, .18);
+}

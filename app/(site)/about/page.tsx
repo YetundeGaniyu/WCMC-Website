@@ -6,7 +6,7 @@ import type { Homepage, TeamMember } from '@/types/sanity';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'About Us — WCMC',
+    title: 'About Us | West Croydon Methodist Church',
     description: 'Learn about West Croydon Methodist Church, our story, our team, and what we believe.',
   };
 }
@@ -50,7 +50,7 @@ export default async function AboutPage() {
                 </p>
               )}
               <p className="text-ink mb-4">
-                We believe in being present in our community — not just on Sundays, but throughout the week.
+                We believe in being present in our community, not just on Sundays but throughout the week.
                 From community groups to youth activities, from pastoral care to social justice initiatives,
                 we seek to be the hands and feet of Jesus in West Croydon.
               </p>
@@ -75,7 +75,7 @@ export default async function AboutPage() {
               )}
               <div className="flex-1">
                 <h2 className="font-serif text-2xl sm:text-3xl text-ink mb-2">{minister.name}</h2>
-                <p className="text-gold text-lg font-medium mb-4">{minister.role}</p>
+                <p className="text-red text-lg font-medium mb-4">{minister.role}</p>
                 {minister.bio && <p className="text-ink mb-4">{minister.bio}</p>}
                 {minister.email && (
                   <a
@@ -114,12 +114,12 @@ export default async function AboutPage() {
                   )}
                   <h3 className="font-serif text-lg text-ink mb-1">{member.name}</h3>
                   {member.role && (
-                    <p className="text-gold text-sm font-medium mb-2">{member.role}</p>
+                    <p className="text-red text-sm font-medium mb-2">{member.role}</p>
                   )}
                   {member.email && (
                     <a
                       href={`mailto:${member.email}`}
-                      className="text-ink-muted text-sm hover:text-gold transition-colors"
+                      className="text-ink-muted text-sm hover:text-red transition-colors"
                     >
                       {member.email}
                     </a>
@@ -149,7 +149,7 @@ export default async function AboutPage() {
               </p>
               <p>
                 We believe in the power of prayer, the importance of worship, and the value of small groups
-                for spiritual growth. We believe that faith is a journey, not a destination — and we&apos;re
+                for spiritual growth. We believe that faith is a journey, not a destination, and we&apos;re
                 all on that journey together.
               </p>
             </div>

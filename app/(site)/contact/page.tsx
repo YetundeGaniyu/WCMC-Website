@@ -32,23 +32,23 @@ export default async function ContactPage() {
                     <h3 className="font-medium mb-1">Address</h3>
                     <p className="text-ink-muted">
                       West Croydon Methodist Church<br />
-                      123 London Road<br />
-                      West Croydon, CR0 2XX
+                      93 London Rd<br />
+                      Croydon, CR0 2RF
                     </p>
                   </div>
                   <div>
                     <h3 className="font-medium mb-1">Phone</h3>
                     <p className="text-ink-muted">
-                      <a href="tel:+442012345678" className="hover:text-gold transition-colors">
-                        020 1234 5678
+                      <a href="tel:+442087749356" className="hover:text-red transition-colors">
+                        020 8774 9356
                       </a>
                     </p>
                   </div>
                   <div>
                     <h3 className="font-medium mb-1">Email</h3>
                     <p className="text-ink-muted">
-                      <a href="mailto:info@wcmc.org.uk" className="hover:text-gold transition-colors">
-                        info@wcmc.org.uk
+                      <a href="mailto:info@westcroydonmeth.co.uk" className="hover:text-red transition-colors">
+                        info@westcroydonmeth.co.uk
                       </a>
                     </p>
                   </div>
@@ -58,7 +58,7 @@ export default async function ContactPage() {
               {/* Google Maps iframe */}
               <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2486.123456789!2d-0.123456!3d51.376543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDIyJzM1LjUiTiAwwrAwNycyNC40Ilc!5e0!3m2!1sen!2suk!4v1234567890"
+                  src="https://www.google.com/maps?q=93%20London%20Rd,%20Croydon%20CR0%202RF&output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
@@ -104,12 +104,12 @@ export default async function ContactPage() {
                   )}
                   <h3 className="font-serif text-lg text-ink mb-1">{member.name}</h3>
                   {member.role && (
-                    <p className="text-gold text-sm font-medium mb-2">{member.role}</p>
+                    <p className="text-red text-sm font-medium mb-2">{member.role}</p>
                   )}
                   {member.email && (
                     <a
                       href={`mailto:${member.email}`}
-                      className="text-ink-muted text-sm hover:text-gold transition-colors"
+                      className="text-ink-muted text-sm hover:text-red transition-colors"
                     >
                       {member.email}
                     </a>

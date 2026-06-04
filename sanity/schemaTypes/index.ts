@@ -14,8 +14,7 @@ export const siteSettings = defineType({
   title: 'Site Settings',
   type: 'document',
   icon: () => '⚙️',
-  // Treat as singleton — only one document of this type
-  __experimental_actions: ['update', 'publish'],
+  // Singleton intent: only one document of this type (enforce via Studio structure)
   fields: [
     defineField({ name: 'churchName',  title: 'Church Name',  type: 'string', initialValue: 'WCMC' }),
     defineField({ name: 'strapline',   title: 'Strapline',    type: 'string', description: 'Shown in hero / meta description' }),
@@ -290,8 +289,7 @@ export const hallHireEnquiry = defineType({
   title: 'Hall Hire Enquiries',
   type: 'document',
   icon: () => '🏛️',
-  // Read-only in Studio — submitted via API from contact form
-  __experimental_actions: ['update', 'publish', 'delete'],
+  // Submitted via API from the contact form
   fields: [
     defineField({ name: 'name',         title: 'Name',           type: 'string' }),
     defineField({ name: 'email',        title: 'Email',          type: 'string' }),
@@ -325,7 +323,6 @@ export const homepage = defineType({
   title: 'Homepage Content',
   type: 'document',
   icon: () => '🏠',
-  __experimental_actions: ['update', 'publish'],
   fields: [
     defineField({ name: 'heroHeading',    title: 'Hero Heading',    type: 'string' }),
     defineField({ name: 'heroSubheading', title: 'Hero Subheading', type: 'text', rows: 2 }),

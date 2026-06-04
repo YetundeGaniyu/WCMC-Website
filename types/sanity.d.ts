@@ -1,4 +1,13 @@
-import { SanityImageSource } from '@sanity/image-url';
+/**
+ * A Sanity image field. Concrete shape (with `asset`) so components can safely
+ * read `.asset` / `.alt`, while remaining compatible with urlFor().
+ */
+export interface SanityImage {
+  asset: { _ref: string; _type: 'reference' };
+  alt?: string;
+  hotspot?: { x: number; y: number; height: number; width: number };
+  crop?: { top: number; bottom: number; left: number; right: number };
+}
 
 export interface SiteSettings {
   _id: string;
@@ -25,7 +34,7 @@ export interface TeamMember {
   _type: 'teamMember';
   name: string;
   role: string;
-  photo?: SanityImageSource;
+  photo?: SanityImage;
   email?: string;
   bio?: string;
   contactContext?: string;
@@ -44,7 +53,7 @@ export interface Event {
   recurrenceRule?: string;
   location?: string;
   description?: string;
-  image?: SanityImageSource;
+  image?: SanityImage;
   contactEmail?: string;
   bookingUrl?: string;
   featured: boolean;
@@ -67,7 +76,7 @@ export interface Sermon {
   };
   audioUrl?: string;
   transcript?: Array<Record<string, unknown>>;
-  thumbnailImage?: SanityImageSource;
+  thumbnailImage?: SanityImage;
   notes?: string;
 }
 
@@ -79,7 +88,7 @@ export interface Post {
   category?: 'news' | 'community' | 'faith' | 'youth' | 'announcements';
   author?: TeamMember;
   publishedAt: string;
-  heroImage?: SanityImageSource;
+  heroImage?: SanityImage;
   excerpt?: string;
   body?: Array<Record<string, unknown>>;
   featured: boolean;
@@ -94,7 +103,7 @@ export interface CommunityGroup {
   schedule?: string;
   location?: string;
   description?: string;
-  image?: SanityImageSource;
+  image?: SanityImage;
   contactEmail?: string;
   contactName?: string;
   open: boolean;
@@ -105,7 +114,7 @@ export interface Homepage {
   _type: 'homepage';
   heroHeading?: string;
   heroSubheading?: string;
-  heroImage?: SanityImageSource;
+  heroImage?: SanityImage;
   inclusivityStatement?: string;
   aboutIntro?: string;
   newsletterHeading?: string;
