@@ -1,33 +1,36 @@
 import { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
 import { client } from '@/lib/sanity/client';
-import { GET_HOMEPAGE, GET_TEAM_MEMBERS } from '@/lib/sanity/queries';
+import { GET_TEAM_MEMBERS } from '@/lib/sanity/queries';
 import { urlFor } from '@/lib/sanity/image';
-import type { Homepage, TeamMember } from '@/types/sanity';
+import Card from '@/components/ui/Card';
+import Pill from '@/components/ui/Pill';
+import SectionHeading from '@/components/ui/SectionHeading';
+import Button from '@/components/ui/Button';
+import type { TeamMember } from '@/types/sanity';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'About Us — WCMC',
+    title: 'Who We Are — WCMC',
     description: 'Learn about West Croydon Methodist Church, our story, our team, and what we believe.',
   };
 }
 
 export default async function AboutPage() {
-  const [homepage, teamMembers] = await Promise.all([
-    client.fetch<Homepage>(GET_HOMEPAGE),
-    client.fetch<TeamMember[]>(GET_TEAM_MEMBERS),
-  ]);
+  const teamMembers = await client.fetch<TeamMember[]>(GET_TEAM_MEMBERS);
 
-  // Minister is the team member with order = 1
-  const minister = teamMembers?.find((m) => m.order === 1);
-  const otherTeam = teamMembers?.filter((m) => m.order !== 1);
+  // Minister is the first team member
+  const minister = teamMembers?.[0];
+  const otherTeam = teamMembers?.slice(1);
 
   return (
     <main className="min-h-screen bg-bg">
       {/* Page Hero */}
-      <section className="py-16 sm:py-20">
+      <section className="relative py-16 sm:py-20" style={{ backgroundColor: '#8B1A1A' }}>
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="font-serif text-4xl sm:text-5xl text-ink mb-4">About Us</h1>
-          <p className="text-ink-muted text-lg sm:text-xl max-w-2xl">
+          <h1 className="font-serif font-semibold text-4xl sm:text-5xl text-paper mb-4">Who We Are</h1>
+          <p className="text-paper/90 text-lg sm:text-xl max-w-2xl">
             A warm, welcoming community of faith in the heart of West Croydon.
           </p>
         </div>
@@ -36,24 +39,28 @@ export default async function AboutPage() {
       {/* Church Story */}
       <section className="py-12 sm:py-16">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <h2 className="font-serif text-2xl sm:text-3xl text-ink mb-6">Our Story</h2>
-            <div className="prose prose-lg text-ink">
-              {homepage?.aboutIntro ? (
-                <p className="text-ink mb-4">{homepage.aboutIntro}</p>
-              ) : (
-                <p className="text-ink mb-4">
-                  West Croydon Methodist Church has been serving the local community for over 100 years.
-                  We&apos;re a diverse congregation united by our faith and commitment to loving our neighbours.
-                  Whether you&apos;re exploring faith for the first time or looking for a church home,
-                  you&apos;ll find a warm welcome here.
-                </p>
-              )}
-              <p className="text-ink mb-4">
+          <SectionHeading>Our Story</SectionHeading>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            <div className="space-y-4 text-ink">
+              <p className="font-sans">
+                West Croydon Methodist Church has been serving the local community for over 100 years.
+                We&apos;re a diverse congregation united by our faith and commitment to loving our neighbours.
+                Whether you&apos;re exploring faith for the first time or looking for a church home,
+                you&apos;ll find a warm welcome here.
+              </p>
+              <p className="font-sans">
                 We believe in being present in our community — not just on Sundays, but throughout the week.
                 From community groups to youth activities, from pastoral care to social justice initiatives,
                 we seek to be the hands and feet of Jesus in West Croydon.
               </p>
+              <p className="font-sans">
+                Our doors are open to everyone, regardless of background, belief, or circumstance.
+                We believe that God&apos;s love is for all people, and we strive to reflect that love
+                in everything we do.
+              </p>
+            </div>
+            <div className="aspect-square bg-gradient-to-br from-red-light to-gold-pale rounded-lg flex items-center justify-center">
+              <span className="text-ink-muted text-center px-4">Church image placeholder</span>
             </div>
           </div>
         </div>
@@ -61,50 +68,54 @@ export default async function AboutPage() {
 
       {/* Minister Bio Card */}
       {minister && (
-        <section className="py-12 sm:py-16 bg-paper">
+        <section className="py-12 sm:py-16">
           <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-white shadow-card rounded-lg p-6 sm:p-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start">
-              {minister.photo?.asset && (
-                <div className="w-32 h-32 sm:w-40 sm:h-40 flex-shrink-0 rounded-full bg-gray-100 overflow-hidden">
-                  <img
+            <SectionHeading>Meet Our Minister</SectionHeading>
+            <Card className="p-6 sm:p-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start">
+              {minister.photo?.asset ? (
+                <div className="w-40 h-40 sm:w-48 sm:h-48 flex-shrink-0 rounded-full bg-gray-100 overflow-hidden relative">
+                  <Image
                     src={urlFor(minister.photo).url()}
                     alt={minister.name}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
+                </div>
+              ) : (
+                <div className="w-40 h-40 sm:w-48 sm:h-48 flex-shrink-0 rounded-full bg-gold-pale flex items-center justify-center">
+                  <span className="text-ink-muted text-sm">No photo</span>
                 </div>
               )}
               <div className="flex-1">
-                <h2 className="font-serif text-2xl sm:text-3xl text-ink mb-2">{minister.name}</h2>
-                <p className="text-gold text-lg font-medium mb-4">{minister.role}</p>
-                {minister.bio && <p className="text-ink mb-4">{minister.bio}</p>}
+                <h2 className="font-serif font-semibold text-2xl sm:text-3xl text-ink mb-2">{minister.name}</h2>
+                <Pill className="mb-4">{minister.role}</Pill>
+                {minister.bio && <p className="font-sans text-ink mb-4">{minister.bio}</p>}
                 {minister.email && (
-                  <a
-                    href={`mailto:${minister.email}`}
-                    className="inline-block bg-red text-paper rounded-md px-6 py-3 text-base font-medium hover:bg-red-dark transition-colors min-h-[48px]"
-                  >
-                    Contact {minister.name.split(' ')[0]}
-                  </a>
+                  <Link href={`mailto:${minister.email}`}>
+                    <Button>Contact {minister.name.split(' ')[0]}</Button>
+                  </Link>
                 )}
               </div>
-            </div>
+            </Card>
           </div>
         </section>
       )}
 
-      {/* Team Grid */}
-      {otherTeam && otherTeam.length > 0 && (
-        <section className="py-12 sm:py-16">
+      {/* Full Team Grid */}
+      {otherTeam && otherTeam.length > 0 ? (
+        <section className="py-12 sm:py-16 bg-paper">
           <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="font-serif text-2xl sm:text-3xl text-ink mb-8">Our Team</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <SectionHeading>Our Team</SectionHeading>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {otherTeam.map((member) => (
-                <div key={member._id} className="bg-white shadow-card rounded-lg p-6 text-center">
+                <Card key={member._id} className="p-6 text-center">
                   {member.photo?.asset ? (
-                    <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gray-100 overflow-hidden">
-                      <img
+                    <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gray-100 overflow-hidden relative">
+                      <Image
                         src={urlFor(member.photo).url()}
                         alt={member.name}
-                        className="w-full h-full object-cover"
+                        fill
+                        className="object-cover"
                       />
                     </div>
                   ) : (
@@ -112,47 +123,62 @@ export default async function AboutPage() {
                       <span className="text-ink-muted text-sm">No photo</span>
                     </div>
                   )}
-                  <h3 className="font-serif text-lg text-ink mb-1">{member.name}</h3>
-                  {member.role && (
-                    <p className="text-gold text-sm font-medium mb-2">{member.role}</p>
-                  )}
+                  <h3 className="font-serif font-semibold text-lg text-ink mb-1">{member.name}</h3>
+                  {member.role && <Pill className="mb-2">{member.role}</Pill>}
                   {member.email && (
-                    <a
+                    <Link
                       href={`mailto:${member.email}`}
                       className="text-ink-muted text-sm hover:text-gold transition-colors"
                     >
                       {member.email}
-                    </a>
+                    </Link>
                   )}
-                </div>
+                </Card>
               ))}
             </div>
+          </div>
+        </section>
+      ) : (
+        <section className="py-12 sm:py-16 bg-paper">
+          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionHeading>Our Team</SectionHeading>
+            <p className="text-ink-muted text-center py-8">No team members listed yet</p>
           </div>
         </section>
       )}
 
       {/* Methodist Beliefs */}
-      <section className="py-12 sm:py-16 bg-paper">
+      <section className="py-12 sm:py-16">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <h2 className="font-serif text-2xl sm:text-3xl text-ink mb-6">What We Believe</h2>
-            <div className="space-y-4 text-ink">
-              <p>
-                As Methodists, we believe in a God of love who is actively involved in the world.
-                Our faith is rooted in the Bible and shaped by the Methodist tradition, which emphasises
-                personal faith, social justice, and the importance of community.
+          <SectionHeading>What We Believe</SectionHeading>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card className="p-6 text-center">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gold-pale flex items-center justify-center">
+                <span className="text-3xl">🍽️</span>
+              </div>
+              <h3 className="font-serif font-semibold text-lg text-ink mb-2">Open Table</h3>
+              <p className="font-sans text-ink text-sm">
+                Everyone is welcome at our table, regardless of background or belief.
               </p>
-              <p>
-                We believe that everyone is made in the image of God and deserves to be treated with
-                dignity and respect. We&apos;re committed to working for justice and peace in our world,
-                and to caring for God&apos;s creation.
+            </Card>
+            <Card className="p-6 text-center">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gold-pale flex items-center justify-center">
+                <span className="text-3xl">⚖️</span>
+              </div>
+              <h3 className="font-serif font-semibold text-lg text-ink mb-2">Social Justice</h3>
+              <p className="font-sans text-ink text-sm">
+                We work for justice, peace, and the wellbeing of all people.
               </p>
-              <p>
-                We believe in the power of prayer, the importance of worship, and the value of small groups
-                for spiritual growth. We believe that faith is a journey, not a destination — and we&apos;re
-                all on that journey together.
+            </Card>
+            <Card className="p-6 text-center">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gold-pale flex items-center justify-center">
+                <span className="text-3xl">🤝</span>
+              </div>
+              <h3 className="font-serif font-semibold text-lg text-ink mb-2">Inclusive Community</h3>
+              <p className="font-sans text-ink text-sm">
+                We celebrate diversity and strive to be a place where all belong.
               </p>
-            </div>
+            </Card>
           </div>
         </div>
       </section>
@@ -160,22 +186,19 @@ export default async function AboutPage() {
       {/* Safeguarding Statement */}
       <section className="py-12 sm:py-16">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl bg-gold-pale border-2 border-gold rounded-lg p-6 sm:p-8">
-            <h2 className="font-serif text-2xl text-ink mb-4">Safeguarding</h2>
-            <p className="text-ink mb-4">
+          <div className="max-w-3xl bg-ink border-2 border-gold rounded-lg p-6 sm:p-8">
+            <h2 className="font-serif font-semibold text-2xl text-paper mb-4">Safeguarding</h2>
+            <p className="font-sans text-paper mb-4">
               We take the safety and wellbeing of children, young people, and vulnerable adults very seriously.
               All our volunteers and workers are DBS-checked and trained in safeguarding procedures.
             </p>
-            <p className="text-ink mb-6">
+            <p className="font-sans text-paper mb-6">
               If you have any concerns about safeguarding, please contact our Safeguarding Officer
               or speak to a member of the ministry team.
             </p>
-            <a
-              href="/contact"
-              className="inline-block bg-red text-paper rounded-md px-6 py-3 text-base font-medium hover:bg-red-dark transition-colors min-h-[48px]"
-            >
-              Contact us about safeguarding
-            </a>
+            <Link href="/contact">
+              <Button>Contact us about safeguarding</Button>
+            </Link>
           </div>
         </div>
       </section>

@@ -18,6 +18,8 @@ export const GET_LATEST_POSTS = `*[_type == "post" && defined(slug.current)] | o
 
 export const GET_POST_BY_SLUG = `*[_type == "post" && slug.current == $slug][0]`;
 
+export const GET_RELATED_POSTS = `*[_type == "post" && category == $category && slug.current != $slug] | order(publishedAt desc) [0...2]`;
+
 export const GET_TEAM_MEMBERS = `*[_type == "teamMember"] | order(order asc)`;
 
 export const GET_COMMUNITY_GROUPS = `*[_type == "communityGroup" && defined(slug.current)] | order(_createdAt asc) [0...4]`;

@@ -1,8 +1,17 @@
+import { Metadata } from 'next';
+import Image from 'next/image';
 import { client } from '@/lib/sanity/client';
 import { GET_TEAM_MEMBERS } from '@/lib/sanity/queries';
 import { urlFor } from '@/lib/sanity/image';
 import ContactForm from '@/components/blocks/ContactForm';
 import type { TeamMember } from '@/types/sanity';
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'Contact — WCMC',
+    description: 'Get in touch with West Croydon Methodist Church. We\'d love to hear from you.',
+  };
+}
 
 export default async function ContactPage() {
   const teamMembers = await client.fetch<TeamMember[]>(GET_TEAM_MEMBERS);
@@ -10,11 +19,11 @@ export default async function ContactPage() {
   return (
     <main className="min-h-screen bg-bg">
       {/* 1. Page Hero */}
-      <section className="py-16 sm:py-20">
+      <section className="py-16 sm:py-20" style={{ backgroundColor: '#8B1A1A' }}>
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="font-serif text-4xl sm:text-5xl text-ink mb-4">Say hello.</h1>
-          <p className="text-ink-muted text-lg sm:text-xl max-w-2xl">
-            We&apos;d love to hear from you. Whether you have a question, want to visit, or just want to say hi.
+          <h1 className="font-serif font-semibold text-4xl sm:text-5xl text-paper mb-4">Say hello.</h1>
+          <p className="text-paper/90 text-lg sm:text-xl max-w-2xl">
+            We&apos;d love to hear from you
           </p>
         </div>
       </section>
@@ -32,8 +41,8 @@ export default async function ContactPage() {
                     <h3 className="font-medium mb-1">Address</h3>
                     <p className="text-ink-muted">
                       West Croydon Methodist Church<br />
-                      123 London Road<br />
-                      West Croydon, CR0 2XX
+                      93 London Road<br />
+                      West Croydon, CR0 2RF
                     </p>
                   </div>
                   <div>
@@ -56,18 +65,17 @@ export default async function ContactPage() {
               </div>
 
               {/* Google Maps iframe */}
-              <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2486.123456789!2d-0.123456!3d51.376543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDIyJzM1LjUiTiAwwrAwNycyNC40Ilc!5e0!3m2!1sen!2suk!4v1234567890"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="West Croydon Methodist Church location"
-                />
-              </div>
+              <iframe
+                src="https://www.google.com/maps?q=West+Croydon+Methodist+Church,+122+London+Road,+West+Croydon,+CR0+2XX&output=embed"
+                width="100%"
+                height="400"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="WCMC location map"
+                className="rounded-lg w-full h-[280px] md:h-[400px]"
+              />
             </div>
 
             {/* Right: Contact Form */}
@@ -89,12 +97,13 @@ export default async function ContactPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {teamMembers.map((member) => (
                 <div key={member._id} className="bg-white shadow-card rounded-lg p-6 text-center">
-                  {member.photo?.asset ? (
-                    <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gray-100 overflow-hidden">
-                      <img
+                  {member.photo ? (
+                    <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gray-100 overflow-hidden relative">
+                      <Image
                         src={urlFor(member.photo).url()}
                         alt={member.name}
-                        className="w-full h-full object-cover"
+                        fill
+                        className="object-cover"
                       />
                     </div>
                   ) : (
@@ -113,6 +122,9 @@ export default async function ContactPage() {
                     >
                       {member.email}
                     </a>
+                  )}
+                  {member.contactContext && (
+                    <p className="text-ink-muted text-xs mt-1">{member.contactContext}</p>
                   )}
                 </div>
               ))}

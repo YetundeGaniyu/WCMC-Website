@@ -10,8 +10,8 @@ export default function SiteFooter() {
             <h3 className="font-serif text-base sm:text-lg mb-3 sm:mb-4 text-gold">Contact Us</h3>
             <address className="not-italic space-y-1.5 sm:space-y-2 text-ink-muted text-sm sm:text-base">
               <p>West Croydon Methodist Church</p>
-              <p>123 London Road</p>
-              <p>West Croydon, CR0 2XX</p>
+              <p>93 London Road</p>
+              <p>West Croydon, CR0 2RF</p>
               <p className="pt-2">
                 <a href="tel:+442012345678" className="hover:text-gold transition-colors">
                   020 1234 5678
