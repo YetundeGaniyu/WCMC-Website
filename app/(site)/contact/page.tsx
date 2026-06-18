@@ -41,23 +41,28 @@ export default async function ContactPage() {
                     <h3 className="font-medium mb-1">Address</h3>
                     <p className="text-ink-muted">
                       West Croydon Methodist Church<br />
+<<<<<<< HEAD
                       93 London Road<br />
                       West Croydon, CR0 2RF
+=======
+                      93 London Rd<br />
+                      Croydon, CR0 2RF
+>>>>>>> e3b7d8c3cee3080d8d561a5060b9c17a3539901a
                     </p>
                   </div>
                   <div>
                     <h3 className="font-medium mb-1">Phone</h3>
                     <p className="text-ink-muted">
-                      <a href="tel:+442012345678" className="hover:text-gold transition-colors">
-                        020 1234 5678
+                      <a href="tel:+442087749356" className="hover:text-red transition-colors">
+                        020 8774 9356
                       </a>
                     </p>
                   </div>
                   <div>
                     <h3 className="font-medium mb-1">Email</h3>
                     <p className="text-ink-muted">
-                      <a href="mailto:info@wcmc.org.uk" className="hover:text-gold transition-colors">
-                        info@wcmc.org.uk
+                      <a href="mailto:info@westcroydonmeth.co.uk" className="hover:text-red transition-colors">
+                        info@westcroydonmeth.co.uk
                       </a>
                     </p>
                   </div>
@@ -65,6 +70,7 @@ export default async function ContactPage() {
               </div>
 
               {/* Google Maps iframe */}
+<<<<<<< HEAD
               <iframe
                 src="https://www.google.com/maps?q=West+Croydon+Methodist+Church,+122+London+Road,+West+Croydon,+CR0+2XX&output=embed"
                 width="100%"
@@ -76,6 +82,20 @@ export default async function ContactPage() {
                 title="WCMC location map"
                 className="rounded-lg w-full h-[280px] md:h-[400px]"
               />
+=======
+              <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden">
+                <iframe
+                  src="https://www.google.com/maps?q=93%20London%20Rd,%20Croydon%20CR0%202RF&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="West Croydon Methodist Church location"
+                />
+              </div>
+>>>>>>> e3b7d8c3cee3080d8d561a5060b9c17a3539901a
             </div>
 
             {/* Right: Contact Form */}
@@ -113,12 +133,12 @@ export default async function ContactPage() {
                   )}
                   <h3 className="font-serif text-lg text-ink mb-1">{member.name}</h3>
                   {member.role && (
-                    <p className="text-gold text-sm font-medium mb-2">{member.role}</p>
+                    <p className="text-red text-sm font-medium mb-2">{member.role}</p>
                   )}
                   {member.email && (
                     <a
                       href={`mailto:${member.email}`}
-                      className="text-ink-muted text-sm hover:text-gold transition-colors"
+                      className="text-ink-muted text-sm hover:text-red transition-colors"
                     >
                       {member.email}
                     </a>

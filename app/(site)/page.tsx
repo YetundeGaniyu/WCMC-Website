@@ -8,6 +8,7 @@ import {
   GET_LATEST_POSTS,
 } from '@/lib/sanity/queries';
 import NewsletterSignup from '@/components/blocks/NewsletterSignup';
+import Reveal from '@/components/ui/Reveal';
 import type { Homepage, Event, CommunityGroup, Post } from '@/types/sanity';
 
 export default async function HomePage() {
@@ -39,17 +40,17 @@ export default async function HomePage() {
             style={{ backgroundImage: `url(${urlFor(homepage.heroImage).url()})` }}
           />
         ) : (
-          <div className="absolute inset-0" style={{ backgroundColor: '#8B1A1A' }} />
+          <div className="absolute inset-0 bg-red" />
         )}
         <div className="absolute inset-0 bg-gradient-to-r from-ink/70 to-ink/20" />
         <div className="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-paper mb-6 max-w-3xl">
+          <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-paper mb-6 max-w-3xl animate-fade-in-up">
             {homepage?.heroHeading || 'Welcome to West Croydon Methodist Church'}
           </h1>
-          <p className="text-paper/90 text-lg sm:text-xl mb-8 max-w-2xl">
+          <p className="text-paper/90 text-lg sm:text-xl mb-8 max-w-2xl animate-fade-in-up delay-100">
             {homepage?.heroSubheading || 'A warm, welcoming community where everyone belongs.'}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up delay-200">
             <Link
               href="/visit"
               className="bg-red text-paper rounded-md px-6 py-3 text-base sm:text-lg font-medium hover:bg-red-dark transition-colors text-center min-h-[48px] flex items-center justify-center"
@@ -70,7 +71,7 @@ export default async function HomePage() {
       <section className="bg-ink text-paper py-6">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-center text-base sm:text-lg mb-4">
-            {homepage?.inclusivityStatement || "All are welcome at WCMC — no matter who you are or where you're from."}
+            {homepage?.inclusivityStatement || "All are welcome at WCMC, no matter who you are or where you're from."}
           </p>
           <div className="flex justify-center gap-3 flex-wrap">
             <span className="px-4 py-2 bg-gold text-ink rounded-full text-sm font-medium">Open to all</span>
@@ -84,17 +85,18 @@ export default async function HomePage() {
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-8">
             <h2 className="font-serif text-2xl sm:text-3xl text-ink">What&apos;s On</h2>
-            <Link href="/whats-on" className="text-gold hover:text-gold-light font-medium">
+            <Link href="/whats-on" className="text-red hover:text-red-dark font-medium">
               See all events →
             </Link>
           </div>
           {featuredEvents && featuredEvents.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featuredEvents.map((event) => (
+              {featuredEvents.map((event, i) => (
                 <Link
                   key={event._id}
                   href={event.slug?.current ? `/whats-on/${event.slug.current}` : '/whats-on'}
-                  className="group"
+                  className="group animate-fade-in-up"
+                  style={{ animationDelay: `${i * 90}ms` }}
                 >
                   <div className="bg-white shadow-card rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
                     {event.image?.asset ? (
@@ -127,7 +129,7 @@ export default async function HomePage() {
               ))}
             </div>
           ) : (
-            <p className="text-ink-muted text-center py-8">No featured events right now — check back soon</p>
+            <p className="text-ink-muted text-center py-8">No featured events right now. Check back soon</p>
           )}
         </div>
       </section>
@@ -137,17 +139,18 @@ export default async function HomePage() {
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-8">
             <h2 className="font-serif text-2xl sm:text-3xl text-ink">Community Groups</h2>
-            <Link href="/community" className="text-gold hover:text-gold-light font-medium">
+            <Link href="/community" className="text-red hover:text-red-dark font-medium">
               Get involved →
             </Link>
           </div>
           {communityGroups && communityGroups.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {communityGroups.map((group) => (
+              {communityGroups.map((group, i) => (
                 <Link
                   key={group._id}
                   href={group.slug?.current ? `/community/${group.slug.current}` : '/community'}
-                  className="group"
+                  className="group animate-fade-in-up"
+                  style={{ animationDelay: `${i * 90}ms` }}
                 >
                   <div className="bg-white shadow-card rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
                     {group.image?.asset ? (
@@ -189,17 +192,18 @@ export default async function HomePage() {
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-8">
             <h2 className="font-serif text-2xl sm:text-3xl text-ink">Latest News</h2>
-            <Link href="/news" className="text-gold hover:text-gold-light font-medium">
+            <Link href="/news" className="text-red hover:text-red-dark font-medium">
               All news & stories →
             </Link>
           </div>
           {latestPosts && latestPosts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {latestPosts.map((post) => (
+              {latestPosts.map((post, i) => (
                 <Link
                   key={post._id}
                   href={post.slug?.current ? `/news/${post.slug.current}` : '/news'}
-                  className="group"
+                  className="group animate-fade-in-up"
+                  style={{ animationDelay: `${i * 90}ms` }}
                 >
                   <div className="bg-white shadow-card rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
                     {post.heroImage?.asset ? (
@@ -245,23 +249,23 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div>
               <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-ink mb-6">
-                Come as you are — here&apos;s what to expect on Sunday
+                Come as you are. Here&apos;s what to expect on Sunday
               </h2>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-3">
-                  <span className="text-gold text-xl">✓</span>
+                  <span className="text-red text-xl">✓</span>
                   <span className="text-ink">Warm welcome from our friendly community</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-gold text-xl">✓</span>
-                  <span className="text-ink">Casual dress — come as you are</span>
+                  <span className="text-red text-xl">✓</span>
+                  <span className="text-ink">Casual dress, come as you are</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-gold text-xl">✓</span>
-                  <span className="text-ink">Kids welcome — we have activities for all ages</span>
+                  <span className="text-red text-xl">✓</span>
+                  <span className="text-ink">Kids welcome, with activities for all ages</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-gold text-xl">✓</span>
+                  <span className="text-red text-xl">✓</span>
                   <span className="text-ink">Parking available nearby</span>
                 </li>
               </ul>
@@ -282,7 +286,9 @@ export default async function HomePage() {
       {/* 7. Newsletter Signup */}
       <section className="py-12 sm:py-16">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <NewsletterSignup />
+          <Reveal>
+            <NewsletterSignup />
+          </Reveal>
         </div>
       </section>
     </main>

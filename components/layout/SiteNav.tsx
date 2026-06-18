@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { LogoMark } from '@/components/brand/Logo';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -21,25 +22,30 @@ export default function SiteNav() {
 
   return (
     <nav className="sticky top-0 z-50 bg-paper/95 backdrop-blur border-b border-line-soft">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-10">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          {/* Left: Logo */}
-          <Link href="/" className="flex items-center gap-2 sm:gap-3">
-            <div className="relative w-8 h-8 sm:w-10 sm:h-10">
-              <div className="absolute inset-0 bg-red-dark"></div>
-              <div className="absolute inset-0 bg-gold translate-x-1 translate-y-1"></div>
-            </div>
-            <span className="font-serif text-lg sm:text-xl text-ink">WCMC</span>
+          {/* Left: Logo + church name */}
+          <Link
+            href="/"
+            className="logo-link flex items-center gap-2.5 sm:gap-3 shrink-0"
+            aria-label="West Croydon Methodist Church home page"
+          >
+            <LogoMark className="w-10 h-10 sm:w-12 sm:h-12 text-red shrink-0" />
+            <span className="flex flex-col leading-tight">
+              <span className="font-serif text-xl sm:text-2xl font-semibold text-ink">West Croydon</span>
+              <span className="font-serif text-xs sm:text-sm font-medium text-red tracking-wide">Methodist Church</span>
+            </span>
           </Link>
 
           {/* Centre: Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-4 sm:gap-6">
+          <div className="hidden lg:flex items-center gap-x-4 xl:gap-x-6">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm sm:text-base font-medium transition-colors hover:text-gold py-2 ${
-                  pathname === link.href ? 'text-gold border-b-2 border-gold' : 'text-ink'
+                aria-current={pathname === link.href ? 'page' : undefined}
+                className={`nav-link text-sm font-medium transition-colors hover:text-red py-2 ${
+                  pathname === link.href ? 'text-red' : 'text-ink'
                 }`}
               >
                 {link.label}
@@ -51,7 +57,7 @@ export default function SiteNav() {
           <div className="hidden sm:block">
             <Link
               href="/visit"
-              className="bg-red text-paper rounded-md px-3 sm:px-4 py-2.5 text-sm font-medium hover:bg-red-dark transition-colors min-h-[44px] flex items-center justify-center"
+              className="bg-red text-paper rounded-md px-3 sm:px-4 py-2.5 text-sm font-medium hover:bg-red-dark btn-lift min-h-[44px] flex items-center justify-center"
             >
               Plan your visit
             </Link>
@@ -62,6 +68,8 @@ export default function SiteNav() {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="lg:hidden p-3 text-ink min-h-[44px] min-w-[44px] flex items-center justify-center"
             aria-label="Toggle menu"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {mobileMenuOpen ? (
@@ -75,14 +83,14 @@ export default function SiteNav() {
 
         {/* Mobile Menu - Full screen slide-down drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden py-6 space-y-4 border-t border-line-soft">
+          <div id="mobile-menu" className="lg:hidden py-6 space-y-4 border-t border-line-soft animate-menu-down">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`block text-base sm:text-lg font-medium transition-colors hover:text-gold py-3 px-4 rounded-md ${
-                  pathname === link.href ? 'text-gold bg-gold-pale' : 'text-ink'
+                className={`block text-base sm:text-lg font-medium transition-colors hover:text-red py-3 px-4 rounded-md ${
+                  pathname === link.href ? 'text-red bg-gold-pale' : 'text-ink'
                 }`}
               >
                 {link.label}

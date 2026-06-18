@@ -1,5 +1,6 @@
 import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
+import PrivacyBanner from '@/components/blocks/PrivacyBanner';
 
 export default function SiteLayout({
   children,
@@ -11,6 +12,7 @@ export default function SiteLayout({
       <SiteNav />
       <main>{children}</main>
       <SiteFooter />
+      <PrivacyBanner />
     </>
   );
 }
