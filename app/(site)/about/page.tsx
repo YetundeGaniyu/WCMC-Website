@@ -12,11 +12,7 @@ import type { TeamMember } from '@/types/sanity';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-<<<<<<< HEAD
     title: 'Who We Are — WCMC',
-=======
-    title: 'About Us | West Croydon Methodist Church',
->>>>>>> e3b7d8c3cee3080d8d561a5060b9c17a3539901a
     description: 'Learn about West Croydon Methodist Church, our story, our team, and what we believe.',
   };
 }
@@ -43,7 +39,6 @@ export default async function AboutPage() {
       {/* Church Story */}
       <section className="py-12 sm:py-16">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-<<<<<<< HEAD
           <SectionHeading>Our Story</SectionHeading>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             <div className="space-y-4 text-ink">
@@ -55,23 +50,6 @@ export default async function AboutPage() {
               </p>
               <p className="font-sans">
                 We believe in being present in our community — not just on Sundays, but throughout the week.
-=======
-          <div className="max-w-3xl">
-            <h2 className="font-serif text-2xl sm:text-3xl text-ink mb-6">Our Story</h2>
-            <div className="prose prose-lg text-ink">
-              {homepage?.aboutIntro ? (
-                <p className="text-ink mb-4">{homepage.aboutIntro}</p>
-              ) : (
-                <p className="text-ink mb-4">
-                  West Croydon Methodist Church has been serving the local community for over 100 years.
-                  We&apos;re a diverse congregation united by our faith and commitment to loving our neighbours.
-                  Whether you&apos;re exploring faith for the first time or looking for a church home,
-                  you&apos;ll find a warm welcome here.
-                </p>
-              )}
-              <p className="text-ink mb-4">
-                We believe in being present in our community, not just on Sundays but throughout the week.
->>>>>>> e3b7d8c3cee3080d8d561a5060b9c17a3539901a
                 From community groups to youth activities, from pastoral care to social justice initiatives,
                 we seek to be the hands and feet of Jesus in West Croydon.
               </p>
@@ -109,15 +87,9 @@ export default async function AboutPage() {
                 </div>
               )}
               <div className="flex-1">
-<<<<<<< HEAD
                 <h2 className="font-serif font-semibold text-2xl sm:text-3xl text-ink mb-2">{minister.name}</h2>
                 <Pill className="mb-4">{minister.role}</Pill>
                 {minister.bio && <p className="font-sans text-ink mb-4">{minister.bio}</p>}
-=======
-                <h2 className="font-serif text-2xl sm:text-3xl text-ink mb-2">{minister.name}</h2>
-                <p className="text-red text-lg font-medium mb-4">{minister.role}</p>
-                {minister.bio && <p className="text-ink mb-4">{minister.bio}</p>}
->>>>>>> e3b7d8c3cee3080d8d561a5060b9c17a3539901a
                 {minister.email && (
                   <Link href={`mailto:${minister.email}`}>
                     <Button>Contact {minister.name.split(' ')[0]}</Button>
@@ -151,15 +123,8 @@ export default async function AboutPage() {
                       <span className="text-ink-muted text-sm">No photo</span>
                     </div>
                   )}
-<<<<<<< HEAD
                   <h3 className="font-serif font-semibold text-lg text-ink mb-1">{member.name}</h3>
                   {member.role && <Pill className="mb-2">{member.role}</Pill>}
-=======
-                  <h3 className="font-serif text-lg text-ink mb-1">{member.name}</h3>
-                  {member.role && (
-                    <p className="text-red text-sm font-medium mb-2">{member.role}</p>
-                  )}
->>>>>>> e3b7d8c3cee3080d8d561a5060b9c17a3539901a
                   {member.email && (
                     <Link
                       href={`mailto:${member.email}`}
@@ -204,7 +169,6 @@ export default async function AboutPage() {
               <p className="font-sans text-ink text-sm">
                 We work for justice, peace, and the wellbeing of all people.
               </p>
-<<<<<<< HEAD
             </Card>
             <Card className="p-6 text-center">
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gold-pale flex items-center justify-center">
@@ -213,12 +177,6 @@ export default async function AboutPage() {
               <h3 className="font-serif font-semibold text-lg text-ink mb-2">Inclusive Community</h3>
               <p className="font-sans text-ink text-sm">
                 We celebrate diversity and strive to be a place where all belong.
-=======
-              <p>
-                We believe in the power of prayer, the importance of worship, and the value of small groups
-                for spiritual growth. We believe that faith is a journey, not a destination, and we&apos;re
-                all on that journey together.
->>>>>>> e3b7d8c3cee3080d8d561a5060b9c17a3539901a
               </p>
             </Card>
           </div>

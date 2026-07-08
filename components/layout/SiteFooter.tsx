@@ -49,21 +49,6 @@ export default function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-<<<<<<< HEAD
-    <footer className="bg-ink text-paper">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {/* Column 1: Contact Info */}
-          <div>
-            <h3 className="font-serif text-base sm:text-lg mb-3 sm:mb-4 text-gold">Contact Us</h3>
-            <address className="not-italic space-y-1.5 sm:space-y-2 text-ink-muted text-sm sm:text-base">
-              <p>West Croydon Methodist Church</p>
-              <p>93 London Road</p>
-              <p>West Croydon, CR0 2RF</p>
-              <p className="pt-2">
-                <a href="tel:+442012345678" className="hover:text-gold transition-colors">
-                  020 1234 5678
-=======
     <footer className="bg-ink text-paper border-t-4 border-red">
       <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-12 sm:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
@@ -86,7 +71,7 @@ export default function SiteFooter() {
             </p>
             <p className="mt-4 text-sm">
               <span className="text-gold-light font-medium">Sunday worship</span>
-              <span className="text-paper/70"> · 10:30am every week</span>
+              <span className="text-paper/70"> · 11:00am every week</span>
             </p>
           </div>
 
@@ -122,7 +107,6 @@ export default function SiteFooter() {
               <p>
                 <a href="tel:+442087749356" className="hover:text-white transition-colors">
                   020 8774 9356
->>>>>>> e3b7d8c3cee3080d8d561a5060b9c17a3539901a
                 </a>
               </p>
               <p>
