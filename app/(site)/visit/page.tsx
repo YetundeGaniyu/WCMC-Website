@@ -1,8 +1,13 @@
 import { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
+import { client } from '@/lib/sanity/client';
+import { GET_PAGE_IMAGES } from '@/lib/sanity/queries';
+import { urlFor } from '@/lib/sanity/image';
 import Card from '@/components/ui/Card';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
+import type { PageImages } from '@/types/sanity';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -11,7 +16,9 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function VisitPage() {
+export default async function VisitPage() {
+  const pageImages = await client.fetch<PageImages>(GET_PAGE_IMAGES);
+
   return (
     <main className="min-h-screen bg-bg">
       {/* Page Hero */}
@@ -149,9 +156,20 @@ export default function VisitPage() {
                 Kids join the main service for the first 15 minutes, then go to their groups.
               </p>
             </div>
-            <div className="aspect-square bg-gradient-to-br from-red-light to-gold-pale rounded-lg flex items-center justify-center">
-              <span className="text-ink-muted text-center px-4">Kids image placeholder</span>
-            </div>
+            {pageImages?.visitPageImage?.asset ? (
+              <div className="aspect-square rounded-lg overflow-hidden relative">
+                <Image
+                  src={urlFor(pageImages.visitPageImage).url()}
+                  alt={pageImages.visitPageImage.alt || 'Kids and young people'}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ) : (
+              <div className="aspect-square bg-gradient-to-br from-red-light to-gold-pale rounded-lg flex items-center justify-center">
+                <span className="text-ink-muted text-center px-4">Kids image placeholder</span>
+              </div>
+            )}
           </div>
         </div>
       </section>

@@ -120,3 +120,11 @@ export interface Homepage {
   newsletterHeading?: string;
   newsletterSubheading?: string;
 }
+
+export interface PageImages {
+  _id: string;
+  _type: 'pageImages';
+  aboutPageImage?: SanityImage;
+  visitPageImage?: SanityImage;
+  communityPageImage?: SanityImage;
+}

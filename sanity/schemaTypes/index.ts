@@ -5,6 +5,7 @@
  */
 
 import { defineField, defineType, defineArrayMember } from 'sanity'
+import { pageImages } from './pageImages'
 
 // ─────────────────────────────────────────────
 // 1. SITE SETTINGS  (singleton)
@@ -349,6 +350,7 @@ export const schemaTypes = [
   // Singletons
   siteSettings,
   homepage,
+  pageImages,
   // Collections
   teamMember,
   event,

@@ -2,14 +2,14 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { client } from '@/lib/sanity/client';
-import { GET_ALL_COMMUNITY_GROUPS } from '@/lib/sanity/queries';
+import { GET_ALL_COMMUNITY_GROUPS, GET_PAGE_IMAGES } from '@/lib/sanity/queries';
 import { urlFor } from '@/lib/sanity/image';
 import Card from '@/components/ui/Card';
 import Pill from '@/components/ui/Pill';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
 import PrayerForm from '@/components/blocks/PrayerForm';
-import type { CommunityGroup } from '@/types/sanity';
+import type { CommunityGroup, PageImages } from '@/types/sanity';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -20,6 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function CommunityPage() {
   const communityGroups = await client.fetch<CommunityGroup[]>(GET_ALL_COMMUNITY_GROUPS);
+  const pageImages = await client.fetch<PageImages>(GET_PAGE_IMAGES);
 
   return (
     <main className="min-h-screen bg-bg">
@@ -99,9 +100,20 @@ export default async function CommunityPage() {
                 <Button>Get in touch about volunteering</Button>
               </Link>
             </div>
-            <div className="aspect-square bg-gradient-to-br from-red-light to-gold-pale rounded-lg flex items-center justify-center">
-              <span className="text-ink-muted text-center px-4">Volunteering image placeholder</span>
-            </div>
+            {pageImages?.communityPageImage?.asset ? (
+              <div className="aspect-square rounded-lg overflow-hidden relative">
+                <Image
+                  src={urlFor(pageImages.communityPageImage).url()}
+                  alt={pageImages.communityPageImage.alt || 'Volunteering'}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ) : (
+              <div className="aspect-square bg-gradient-to-br from-red-light to-gold-pale rounded-lg flex items-center justify-center">
+                <span className="text-ink-muted text-center px-4">Volunteering image placeholder</span>
+              </div>
+            )}
           </div>
         </div>
       </section>

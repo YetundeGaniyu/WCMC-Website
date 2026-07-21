@@ -2,13 +2,13 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { client } from '@/lib/sanity/client';
-import { GET_TEAM_MEMBERS } from '@/lib/sanity/queries';
+import { GET_TEAM_MEMBERS, GET_PAGE_IMAGES } from '@/lib/sanity/queries';
 import { urlFor } from '@/lib/sanity/image';
 import Card from '@/components/ui/Card';
 import Pill from '@/components/ui/Pill';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
-import type { TeamMember } from '@/types/sanity';
+import type { TeamMember, PageImages } from '@/types/sanity';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -19,6 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function AboutPage() {
   const teamMembers = await client.fetch<TeamMember[]>(GET_TEAM_MEMBERS);
+  const pageImages = await client.fetch<PageImages>(GET_PAGE_IMAGES);
 
   // Minister is the first team member
   const minister = teamMembers?.[0];
@@ -59,9 +60,20 @@ export default async function AboutPage() {
                 in everything we do.
               </p>
             </div>
-            <div className="aspect-square bg-gradient-to-br from-red-light to-gold-pale rounded-lg flex items-center justify-center">
-              <span className="text-ink-muted text-center px-4">Church image placeholder</span>
-            </div>
+            {pageImages?.aboutPageImage?.asset ? (
+              <div className="aspect-square rounded-lg overflow-hidden relative">
+                <Image
+                  src={urlFor(pageImages.aboutPageImage).url()}
+                  alt={pageImages.aboutPageImage.alt || 'Our church'}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ) : (
+              <div className="aspect-square bg-gradient-to-br from-red-light to-gold-pale rounded-lg flex items-center justify-center">
+                <span className="text-ink-muted text-center px-4">Church image placeholder</span>
+              </div>
+            )}
           </div>
         </div>
       </section>
