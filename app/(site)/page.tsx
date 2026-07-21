@@ -34,7 +34,7 @@ export default async function HomePage() {
     <main className="min-h-screen bg-bg">
       {/* 1. Hero Section */}
       <section className="relative min-h-[70vh] flex items-center">
-        {homepage?.heroImage ? (
+        {homepage?.heroImage?.asset ? (
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${urlFor(homepage.heroImage).url()})` }}
@@ -75,7 +75,7 @@ export default async function HomePage() {
           </p>
           <div className="flex justify-center gap-3 flex-wrap">
             <span className="px-4 py-2 bg-gold text-ink rounded-full text-sm font-medium">Open to all</span>
-            <span className="px-4 py-2 bg-gold text-ink rounded-full text-sm font-medium">No experience needed</span>
+            <span className="px-4 py-2 bg-gold text-ink rounded-full text-sm font-medium">Diverse Congregation</span>
           </div>
         </div>
       </section>

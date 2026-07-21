@@ -127,7 +127,7 @@ export default function EventsBoard({ events }: { events: Event[] }) {
         <div className={`grid gap-6 ${view === 'list' ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'}`}>
           {filteredEvents.map((event) => (
             <Card key={event._id} className="overflow-hidden">
-              {event.image && (
+              {event.image?.asset ? (
                 <div className="aspect-video bg-gray-100 relative">
                   <Image
                     src={urlFor(event.image).url()}
@@ -135,6 +135,10 @@ export default function EventsBoard({ events }: { events: Event[] }) {
                     fill
                     className="object-cover"
                   />
+                </div>
+              ) : (
+                <div className="aspect-video bg-gold-pale flex items-center justify-center">
+                  <span className="text-ink-muted text-sm">No image</span>
                 </div>
               )}
               <div className="p-6">

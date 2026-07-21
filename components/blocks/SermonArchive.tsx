@@ -63,7 +63,7 @@ export default function SermonArchive({ sermons }: { sermons: Sermon[] }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredSermons.map((sermon) => (
             <Card key={sermon._id} className="p-6">
-              {sermon.thumbnailImage && (
+              {sermon.thumbnailImage?.asset && (
                 <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden mb-4 relative">
                   <Image
                     src={urlFor(sermon.thumbnailImage).url()}

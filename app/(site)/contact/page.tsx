@@ -97,7 +97,7 @@ export default async function ContactPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {teamMembers.map((member) => (
                 <div key={member._id} className="bg-white shadow-card rounded-lg p-6 text-center">
-                  {member.photo ? (
+                  {member.photo?.asset ? (
                     <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gray-100 overflow-hidden relative">
                       <Image
                         src={urlFor(member.photo).url()}

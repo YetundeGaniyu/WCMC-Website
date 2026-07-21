@@ -41,7 +41,7 @@ export default async function CommunityPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {communityGroups.map((group) => (
                 <Card key={group._id} className="overflow-hidden">
-                  {group.image && (
+                  {group.image?.asset && (
                     <div className="aspect-video bg-gray-100 relative">
                       <Image
                         src={urlFor(group.image).url()}

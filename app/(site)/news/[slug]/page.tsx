@@ -66,7 +66,7 @@ export default async function NewsPostPage({ params }: PageProps) {
   return (
     <main className="min-h-screen bg-bg">
       {/* Hero Image */}
-      {post.heroImage && (
+      {post.heroImage?.asset && (
         <div className="w-full aspect-video md:aspect-[21/9] bg-gray-100 relative">
           <Image
             src={urlFor(post.heroImage).url()}
@@ -85,7 +85,7 @@ export default async function NewsPostPage({ params }: PageProps) {
 
         {/* Author and Date */}
         <div className="flex items-center gap-4 mb-8">
-          {post.author?.photo && (
+          {post.author?.photo?.asset && (
             <div className="w-12 h-12 rounded-full bg-gray-100 overflow-hidden relative flex-shrink-0">
               <Image
                 src={urlFor(post.author.photo).url()}
@@ -114,7 +114,7 @@ export default async function NewsPostPage({ params }: PageProps) {
               {relatedPosts.map((relatedPost) => (
                 <Link key={relatedPost._id} href={`/news/${relatedPost.slug.current}`}>
                   <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-                    {relatedPost.heroImage && (
+                    {relatedPost.heroImage?.asset && (
                       <div className="aspect-video bg-gray-100 relative">
                         <Image
                           src={urlFor(relatedPost.heroImage).url()}

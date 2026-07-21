@@ -65,7 +65,7 @@ export default function NewsFilter({ posts }: { posts: Post[] }) {
           {filteredPosts.map((post) => (
             <Link key={post._id} href={`/news/${post.slug.current}`}>
               <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-                {post.heroImage && (
+                {post.heroImage?.asset && (
                   <div className="aspect-video bg-gray-100 relative">
                     <Image
                       src={urlFor(post.heroImage).url()}
