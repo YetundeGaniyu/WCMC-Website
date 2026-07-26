@@ -91,6 +91,7 @@ export interface Post {
   heroImage?: SanityImage;
   excerpt?: string;
   body?: Array<Record<string, unknown>>;
+  gallery?: SanityImage[];
   featured: boolean;
 }
 

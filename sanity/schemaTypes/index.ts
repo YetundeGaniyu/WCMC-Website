@@ -233,6 +233,21 @@ export const post = defineType({
         }),
       ],
     }),
+    defineField({
+      name: 'gallery',
+      title: 'Photo Gallery',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            defineField({ name: 'alt', type: 'string', title: 'Alt text' })
+          ]
+        })
+      ],
+      description: 'Add multiple photos for past events — displayed as a grid below the post body'
+    }),
     defineField({ name: 'featured', title: 'Feature on Homepage?', type: 'boolean', initialValue: false }),
   ],
   orderings: [{ title: 'Newest First', name: 'publishedDesc', by: [{ field: 'publishedAt', direction: 'desc' }] }],

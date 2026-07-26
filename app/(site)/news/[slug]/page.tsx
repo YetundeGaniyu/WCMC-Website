@@ -103,6 +103,27 @@ export default async function NewsPostPage({ params }: PageProps) {
 
         {/* PortableText Body */}
         {post.body && <PortableText value={post.body} />}
+
+        {/* Photo Gallery */}
+        {post.gallery && post.gallery.length > 0 && (
+          <section className="mt-12">
+            <h2 className="font-serif font-semibold text-2xl text-ink mb-6">Photo Gallery</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {post.gallery.map((image, index) => (
+                image?.asset ? (
+                  <div key={index} className="aspect-square bg-gray-100 rounded-lg overflow-hidden relative">
+                    <Image
+                      src={urlFor(image).url()}
+                      alt={image.alt || `Gallery image ${index + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                ) : null
+              ))}
+            </div>
+          </section>
+        )}
       </article>
 
       {/* Related Posts */}
