@@ -37,4 +37,12 @@ export const pageImages = defineType({
       description: 'Image shown in the volunteering section on the Community page',
     }),
   ],
+  preview: {
+    select: {
+      title: "'Page Images'",
+    },
+    prepare({ title }) {
+      return { title }
+    },
+  },
 })

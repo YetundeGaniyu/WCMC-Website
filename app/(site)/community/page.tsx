@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { client } from '@/lib/sanity/client';
-import { GET_ALL_COMMUNITY_GROUPS, GET_PAGE_IMAGES } from '@/lib/sanity/queries';
+import { GET_ALL_COMMUNITY_GROUPS, pageImagesQuery } from '@/lib/sanity/queries';
 import { urlFor } from '@/lib/sanity/image';
 import Card from '@/components/ui/Card';
 import Pill from '@/components/ui/Pill';
@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function CommunityPage() {
   const communityGroups = await client.fetch<CommunityGroup[]>(GET_ALL_COMMUNITY_GROUPS);
-  const pageImages = await client.fetch<PageImages>(GET_PAGE_IMAGES);
+  const pageImages = await client.fetch<PageImages>(pageImagesQuery);
 
   return (
     <main className="min-h-screen bg-bg">

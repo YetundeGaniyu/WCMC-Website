@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { client } from '@/lib/sanity/client';
-import { GET_TEAM_MEMBERS, GET_PAGE_IMAGES } from '@/lib/sanity/queries';
+import { GET_TEAM_MEMBERS, pageImagesQuery } from '@/lib/sanity/queries';
 import { urlFor } from '@/lib/sanity/image';
 import Card from '@/components/ui/Card';
 import Pill from '@/components/ui/Pill';
@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function AboutPage() {
   const teamMembers = await client.fetch<TeamMember[]>(GET_TEAM_MEMBERS);
-  const pageImages = await client.fetch<PageImages>(GET_PAGE_IMAGES);
+  const pageImages = await client.fetch<PageImages>(pageImagesQuery);
 
   // Minister is the first team member
   const minister = teamMembers?.[0];

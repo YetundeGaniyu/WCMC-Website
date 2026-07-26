@@ -2,7 +2,11 @@ export const GET_SITE_SETTINGS = `*[_type == "siteSettings"][0]`;
 
 export const GET_HOMEPAGE = `*[_type == "homepage"][0]`;
 
-export const GET_PAGE_IMAGES = `*[_type == "pageImages"][0]`;
+export const pageImagesQuery = `*[_type == "pageImages"][0] {
+  aboutPageImage,
+  visitPageImage,
+  communityPageImage
+}`;
 
 export const GET_FEATURED_EVENTS = `*[_type == "event" && featured == true && defined(slug.current)] | order(startDateTime asc) [0...3]`;
 
