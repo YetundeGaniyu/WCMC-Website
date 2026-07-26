@@ -127,4 +127,5 @@ export interface PageImages {
   aboutPageImage?: SanityImage;
   visitPageImage?: SanityImage;
   communityPageImage?: SanityImage;
+  homepageVisitImage?: SanityImage;
 }

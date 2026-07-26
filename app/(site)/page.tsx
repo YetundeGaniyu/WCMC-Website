@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { client } from '@/lib/sanity/client';
 import { urlFor } from '@/lib/sanity/image';
 import {
@@ -6,17 +7,19 @@ import {
   GET_FEATURED_EVENTS,
   GET_COMMUNITY_GROUPS,
   GET_LATEST_POSTS,
+  pageImagesQuery,
 } from '@/lib/sanity/queries';
 import NewsletterSignup from '@/components/blocks/NewsletterSignup';
 import Reveal from '@/components/ui/Reveal';
-import type { Homepage, Event, CommunityGroup, Post } from '@/types/sanity';
+import type { Homepage, Event, CommunityGroup, Post, PageImages } from '@/types/sanity';
 
 export default async function HomePage() {
-  const [homepage, featuredEvents, communityGroups, latestPosts] = await Promise.all([
+  const [homepage, featuredEvents, communityGroups, latestPosts, pageImages] = await Promise.all([
     client.fetch<Homepage>(GET_HOMEPAGE),
     client.fetch<Event[]>(GET_FEATURED_EVENTS),
     client.fetch<CommunityGroup[]>(GET_COMMUNITY_GROUPS),
     client.fetch<Post[]>(GET_LATEST_POSTS),
+    client.fetch<PageImages>(pageImagesQuery),
   ]);
 
   // Helper to format date
@@ -276,9 +279,20 @@ export default async function HomePage() {
                 Everything you need to know →
               </Link>
             </div>
-            <div className="aspect-square bg-gradient-to-br from-red-light to-gold-pale rounded-lg flex items-center justify-center">
-              <span className="text-ink-muted text-center px-4">Visit image placeholder</span>
-            </div>
+            {pageImages?.homepageVisitImage?.asset ? (
+              <div className="aspect-square rounded-lg overflow-hidden relative">
+                <Image
+                  src={urlFor(pageImages.homepageVisitImage).url()}
+                  alt={pageImages.homepageVisitImage.alt || 'Come as you are'}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ) : (
+              <div className="aspect-square bg-gradient-to-br from-red-light to-gold-pale rounded-lg flex items-center justify-center">
+                <span className="text-ink-muted text-center px-4">Visit image placeholder</span>
+              </div>
+            )}
           </div>
         </div>
       </section>

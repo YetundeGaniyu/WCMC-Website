@@ -36,6 +36,14 @@ export const pageImages = defineType({
       fields: [defineField({ name: 'alt', type: 'string', title: 'Alt text' })],
       description: 'Image shown in the volunteering section on the Community page',
     }),
+    defineField({
+      name: 'homepageVisitImage',
+      title: 'Homepage Visit Image',
+      type: 'image',
+      options: { hotspot: true },
+      fields: [defineField({ name: 'alt', type: 'string', title: 'Alt text' })],
+      description: 'Image shown in the "Come as you are" section on the Homepage',
+    }),
   ],
   preview: {
     select: {
