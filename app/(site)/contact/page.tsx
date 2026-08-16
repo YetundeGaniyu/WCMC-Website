@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ContactPage() {
-  const teamMembers = await client.fetch<TeamMember[]>(GET_TEAM_MEMBERS);
+  const teamMembers = await client.fetch<TeamMember[]>(GET_TEAM_MEMBERS, {}, { next: { revalidate: 60 } });
 
   return (
     <main className="min-h-screen bg-bg">

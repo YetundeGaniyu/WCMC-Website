@@ -19,8 +19,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function CommunityPage() {
-  const communityGroups = await client.fetch<CommunityGroup[]>(GET_ALL_COMMUNITY_GROUPS);
-  const pageImages = await client.fetch<PageImages>(pageImagesQuery);
+  const communityGroups = await client.fetch<CommunityGroup[]>(GET_ALL_COMMUNITY_GROUPS, {}, { next: { revalidate: 60 } });
+  const pageImages = await client.fetch<PageImages>(pageImagesQuery, {}, { next: { revalidate: 60 } });
 
   return (
     <main className="min-h-screen bg-bg">

@@ -16,8 +16,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function WhatsOnPage() {
   const [events, communityGroups] = await Promise.all([
-    client.fetch<Event[]>(GET_EVENTS),
-    client.fetch<CommunityGroup[]>(GET_ALL_COMMUNITY_GROUPS),
+    client.fetch<Event[]>(GET_EVENTS, {}, { next: { revalidate: 60 } }),
+    client.fetch<CommunityGroup[]>(GET_ALL_COMMUNITY_GROUPS, {}, { next: { revalidate: 60 } }),
   ]);
 
   return (

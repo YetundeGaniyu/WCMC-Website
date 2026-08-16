@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function NewsPage() {
-  const posts = await client.fetch<Post[]>(GET_POSTS);
+  const posts = await client.fetch<Post[]>(GET_POSTS, {}, { next: { revalidate: 60 } });
 
   return (
     <main className="min-h-screen bg-bg">

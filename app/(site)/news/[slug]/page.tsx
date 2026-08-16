@@ -12,16 +12,17 @@ import NewsletterSignup from '@/components/blocks/NewsletterSignup';
 import type { Post } from '@/types/sanity';
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  const posts = await client.fetch<Post[]>(`*[_type == "post" && defined(slug.current)]`);
+  const posts = await client.fetch<Post[]>(`*[_type == "post" && defined(slug.current)]`, {}, { next: { revalidate: 60 } });
   return posts.map((post) => ({ slug: post.slug.current }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const post = await client.fetch<Post>(GET_POST_BY_SLUG, { slug: params.slug });
+  const { slug } = await params;
+  const post = await client.fetch<Post>(GET_POST_BY_SLUG, { slug }, { next: { revalidate: 60 } });
 
   if (!post) {
     return {
@@ -36,7 +37,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function NewsPostPage({ params }: PageProps) {
-  const post = await client.fetch<Post>(GET_POST_BY_SLUG, { slug: params.slug });
+  const { slug } = await params;
+  const post = await client.fetch<Post>(GET_POST_BY_SLUG, { slug }, { next: { revalidate: 60 } });
 
   if (!post) {
     return (
@@ -55,7 +57,7 @@ export default async function NewsPostPage({ params }: PageProps) {
     ? await client.fetch<Post[]>(GET_RELATED_POSTS, {
         category: post.category,
         slug: post.slug.current,
-      })
+      }, { next: { revalidate: 60 } })
     : [];
 
   const formatDate = (dateString: string) => {

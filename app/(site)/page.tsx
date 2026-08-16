@@ -15,11 +15,11 @@ import type { Homepage, Event, CommunityGroup, Post, PageImages } from '@/types/
 
 export default async function HomePage() {
   const [homepage, featuredEvents, communityGroups, latestPosts, pageImages] = await Promise.all([
-    client.fetch<Homepage>(GET_HOMEPAGE),
-    client.fetch<Event[]>(GET_FEATURED_EVENTS),
-    client.fetch<CommunityGroup[]>(GET_COMMUNITY_GROUPS),
-    client.fetch<Post[]>(GET_LATEST_POSTS),
-    client.fetch<PageImages>(pageImagesQuery),
+    client.fetch<Homepage>(GET_HOMEPAGE, {}, { next: { revalidate: 60 } }),
+    client.fetch<Event[]>(GET_FEATURED_EVENTS, {}, { next: { revalidate: 60 } }),
+    client.fetch<CommunityGroup[]>(GET_COMMUNITY_GROUPS, {}, { next: { revalidate: 60 } }),
+    client.fetch<Post[]>(GET_LATEST_POSTS, {}, { next: { revalidate: 60 } }),
+    client.fetch<PageImages>(pageImagesQuery, {}, { next: { revalidate: 60 } }),
   ]);
 
   // Helper to format date

@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ServicesPage() {
-  const sermons = await client.fetch<Sermon[]>(GET_SERMONS);
+  const sermons = await client.fetch<Sermon[]>(GET_SERMONS, {}, { next: { revalidate: 60 } });
 
   return (
     <main className="min-h-screen bg-bg">

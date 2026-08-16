@@ -18,8 +18,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AboutPage() {
-  const teamMembers = await client.fetch<TeamMember[]>(GET_TEAM_MEMBERS);
-  const pageImages = await client.fetch<PageImages>(pageImagesQuery);
+  const teamMembers = await client.fetch<TeamMember[]>(GET_TEAM_MEMBERS, {}, { next: { revalidate: 60 } });
+  const pageImages = await client.fetch<PageImages>(pageImagesQuery, {}, { next: { revalidate: 60 } });
 
   // Minister is the first team member
   const minister = teamMembers?.[0];

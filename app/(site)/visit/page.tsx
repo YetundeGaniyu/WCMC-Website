@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function VisitPage() {
-  const pageImages = await client.fetch<PageImages>(pageImagesQuery);
+  const pageImages = await client.fetch<PageImages>(pageImagesQuery, {}, { next: { revalidate: 60 } });
 
   return (
     <main className="min-h-screen bg-bg">
