@@ -5,10 +5,10 @@ import { client } from '@/lib/sanity/client';
 import { GET_ALL_COMMUNITY_GROUPS, pageImagesQuery } from '@/lib/sanity/queries';
 import { urlFor } from '@/lib/sanity/image';
 import Card from '@/components/ui/Card';
-import Pill from '@/components/ui/Pill';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
 import PrayerForm from '@/components/blocks/PrayerForm';
+import CommunityGroupCard from '@/components/blocks/CommunityGroupCard';
 import type { CommunityGroup, PageImages } from '@/types/sanity';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -41,36 +41,7 @@ export default async function CommunityPage() {
           {communityGroups && communityGroups.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {communityGroups.map((group) => (
-                <Card key={group._id} className="overflow-hidden">
-                  {group.image?.asset && (
-                    <div className="aspect-video bg-gray-100 relative">
-                      <Image
-                        src={urlFor(group.image).url()}
-                        alt={group.name}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  )}
-                  <div className="p-6">
-                    <h3 className="font-serif font-semibold text-xl text-ink mb-2">{group.name}</h3>
-                    {group.category && <Pill className="mb-2">{group.category}</Pill>}
-                    {group.schedule && (
-                      <p className="font-sans text-gold text-sm mb-2">📅 {group.schedule}</p>
-                    )}
-                    {group.description && (
-                      <p className="font-sans text-ink text-sm mb-4">{group.description}</p>
-                    )}
-                    {group.contactEmail && (
-                      <a
-                        href={`mailto:${group.contactEmail}`}
-                        className="text-gold text-sm hover:text-gold-light transition-colors"
-                      >
-                        Contact group
-                      </a>
-                    )}
-                  </div>
-                </Card>
+                <CommunityGroupCard key={group._id} group={group} />
               ))}
             </div>
           ) : (

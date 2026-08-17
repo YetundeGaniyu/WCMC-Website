@@ -11,6 +11,7 @@ import {
 } from '@/lib/sanity/queries';
 import NewsletterSignup from '@/components/blocks/NewsletterSignup';
 import Reveal from '@/components/ui/Reveal';
+import CommunityGroupCard from '@/components/blocks/CommunityGroupCard';
 import type { Homepage, Event, CommunityGroup, Post, PageImages } from '@/types/sanity';
 
 export default async function HomePage() {
@@ -149,39 +150,13 @@ export default async function HomePage() {
           {communityGroups && communityGroups.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {communityGroups.map((group, i) => (
-                <Link
-                  key={group._id}
-                  href={group.slug?.current ? `/community/${group.slug.current}` : '/community'}
-                  className="group animate-fade-in-up"
-                  style={{ animationDelay: `${i * 90}ms` }}
-                >
-                  <div className="bg-white shadow-card rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                    {group.image?.asset ? (
-                      <div className="aspect-video bg-gray-100">
-                        <img
-                          src={urlFor(group.image).url()}
-                          alt={group.image.alt || group.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                      </div>
-                    ) : (
-                      <div className="aspect-video bg-gold-pale flex items-center justify-center">
-                        <span className="text-ink-muted text-sm">No image</span>
-                      </div>
-                    )}
-                    <div className="p-4 sm:p-6">
-                      <h3 className="font-serif text-lg text-ink mb-2">{group.name}</h3>
-                      {group.schedule && (
-                        <span className="inline-block px-3 py-1 bg-gold-pale text-ink rounded-full text-xs sm:text-sm mb-2">
-                          {group.schedule}
-                        </span>
-                      )}
-                      {group.description && (
-                        <p className="text-ink-muted text-sm line-clamp-2">{group.description}</p>
-                      )}
-                    </div>
-                  </div>
-                </Link>
+                <div key={group._id} className="animate-fade-in-up" style={{ animationDelay: `${i * 90}ms` }}>
+                  <CommunityGroupCard
+                    group={group}
+                    isLink
+                    href={group.slug?.current ? `/community/${group.slug.current}` : '/community'}
+                  />
+                </div>
               ))}
             </div>
           ) : (
