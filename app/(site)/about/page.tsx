@@ -5,9 +5,9 @@ import { client } from '@/lib/sanity/client';
 import { GET_TEAM_MEMBERS, pageImagesQuery } from '@/lib/sanity/queries';
 import { urlFor } from '@/lib/sanity/image';
 import Card from '@/components/ui/Card';
-import Pill from '@/components/ui/Pill';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
+import TeamMemberCard from '@/components/blocks/TeamMemberCard';
 import type { TeamMember, PageImages } from '@/types/sanity';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -83,32 +83,7 @@ export default async function AboutPage() {
         <section className="py-12 sm:py-16">
           <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeading>Meet Our Minister</SectionHeading>
-            <Card className="p-6 sm:p-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start">
-              {minister.photo?.asset ? (
-                <div className="w-40 h-40 sm:w-48 sm:h-48 flex-shrink-0 rounded-full bg-gray-100 overflow-hidden relative">
-                  <Image
-                    src={urlFor(minister.photo).url()}
-                    alt={minister.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ) : (
-                <div className="w-40 h-40 sm:w-48 sm:h-48 flex-shrink-0 rounded-full bg-gold-pale flex items-center justify-center">
-                  <span className="text-ink-muted text-sm">No photo</span>
-                </div>
-              )}
-              <div className="flex-1">
-                <h2 className="font-serif font-semibold text-2xl sm:text-3xl text-ink mb-2">{minister.name}</h2>
-                <Pill className="mb-4">{minister.role}</Pill>
-                {minister.bio && <p className="font-sans text-ink mb-4">{minister.bio}</p>}
-                {minister.email && (
-                  <Link href={`mailto:${minister.email}`}>
-                    <Button>Contact {minister.name.split(' ')[0]}</Button>
-                  </Link>
-                )}
-              </div>
-            </Card>
+            <TeamMemberCard member={minister} isFeatured />
           </div>
         </section>
       )}
@@ -118,34 +93,9 @@ export default async function AboutPage() {
         <section className="py-12 sm:py-16 bg-paper">
           <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeading>Our Team</SectionHeading>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {otherTeam.map((member) => (
-                <Card key={member._id} className="p-6 text-center">
-                  {member.photo?.asset ? (
-                    <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gray-100 overflow-hidden relative">
-                      <Image
-                        src={urlFor(member.photo).url()}
-                        alt={member.name}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  ) : (
-                    <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gold-pale flex items-center justify-center">
-                      <span className="text-ink-muted text-sm">No photo</span>
-                    </div>
-                  )}
-                  <h3 className="font-serif font-semibold text-lg text-ink mb-1">{member.name}</h3>
-                  {member.role && <Pill className="mb-2">{member.role}</Pill>}
-                  {member.email && (
-                    <Link
-                      href={`mailto:${member.email}`}
-                      className="text-ink-muted text-sm hover:text-red transition-colors"
-                    >
-                      {member.email}
-                    </Link>
-                  )}
-                </Card>
+                <TeamMemberCard key={member._id} member={member} />
               ))}
             </div>
           </div>
