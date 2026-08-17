@@ -116,6 +116,7 @@ export interface Homepage {
   heroHeading?: string;
   heroSubheading?: string;
   heroImage?: SanityImage;
+  heroGallery?: SanityImage[];
   inclusivityStatement?: string;
   aboutIntro?: string;
   newsletterHeading?: string;

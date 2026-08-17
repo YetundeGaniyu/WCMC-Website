@@ -347,6 +347,21 @@ export const homepage = defineType({
       options: { hotspot: true },
       fields: [defineField({ name: 'alt', type: 'string', title: 'Alt text' })],
     }),
+    defineField({
+      name: 'heroGallery',
+      title: 'Hero Slideshow Images',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            defineField({ name: 'alt', type: 'string', title: 'Alt text' })
+          ]
+        })
+      ],
+      description: 'Add multiple images for a slideshow effect. If only one image is added or this is left empty, the hero will show a static image or solid background instead.'
+    }),
     defineField({ name: 'inclusivityStatement', title: 'Inclusivity Statement', type: 'text',
       description: 'The short "All are welcome" band below the hero' }),
     defineField({ name: 'aboutIntro', title: 'About Intro (Homepage teaser)', type: 'text', rows: 3 }),

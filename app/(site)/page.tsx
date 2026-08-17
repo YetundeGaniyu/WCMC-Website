@@ -12,6 +12,7 @@ import {
 import NewsletterSignup from '@/components/blocks/NewsletterSignup';
 import Reveal from '@/components/ui/Reveal';
 import CommunityGroupCard from '@/components/blocks/CommunityGroupCard';
+import HeroSlideshow from '@/components/blocks/HeroSlideshow';
 import type { Homepage, Event, CommunityGroup, Post, PageImages } from '@/types/sanity';
 
 export default async function HomePage() {
@@ -38,15 +39,37 @@ export default async function HomePage() {
     <main className="min-h-screen bg-bg">
       {/* 1. Hero Section */}
       <section className="relative min-h-[70vh] flex items-center">
-        {homepage?.heroImage?.asset ? (
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${urlFor(homepage.heroImage).url()})` }}
-          />
+        {/* Hero background */}
+        {homepage?.heroGallery && homepage.heroGallery.length >= 2 ? (
+          <HeroSlideshow images={homepage.heroGallery} />
+        ) : homepage?.heroGallery && homepage.heroGallery.length === 1 ? (
+          <div className="absolute inset-0">
+            <Image
+              src={urlFor(homepage.heroGallery[0]).url()}
+              alt={homepage.heroGallery[0].alt || 'Hero image'}
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-ink/70 to-ink/20" />
+          </div>
+        ) : homepage?.heroImage?.asset ? (
+          <div className="absolute inset-0">
+            <Image
+              src={urlFor(homepage.heroImage).url()}
+              alt={homepage.heroImage.alt || 'Hero image'}
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-ink/70 to-ink/20" />
+          </div>
         ) : (
-          <div className="absolute inset-0 bg-red" />
+          <>
+            <div className="absolute inset-0 bg-red" />
+            <div className="absolute inset-0 bg-gradient-to-r from-ink/70 to-ink/20" />
+          </>
         )}
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/70 to-ink/20" />
         <div className="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-paper mb-6 max-w-3xl animate-fade-in-up">
             {homepage?.heroHeading || 'Welcome to West Croydon Methodist Church'}
