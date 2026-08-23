@@ -38,7 +38,7 @@ export default async function HomePage() {
   return (
     <main className="min-h-screen bg-bg">
       {/* 1. Hero Section */}
-      <section className="relative min-h-[70vh] flex items-center">
+      <section className="relative min-h-[80vh] flex items-center">
         {/* Hero background */}
         {homepage?.heroGallery && homepage.heroGallery.length >= 2 ? (
           <HeroSlideshow images={homepage.heroGallery} />
@@ -51,7 +51,7 @@ export default async function HomePage() {
               className="object-cover"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-ink/70 to-ink/20" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/20" />
           </div>
         ) : homepage?.heroImage?.asset ? (
           <div className="absolute inset-0">
@@ -62,31 +62,28 @@ export default async function HomePage() {
               className="object-cover"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-ink/70 to-ink/20" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/20" />
           </div>
         ) : (
-          <>
-            <div className="absolute inset-0 bg-red" />
-            <div className="absolute inset-0 bg-gradient-to-r from-ink/70 to-ink/20" />
-          </>
+          <div className="absolute inset-0 bg-red" />
         )}
         <div className="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-paper mb-6 max-w-3xl animate-fade-in-up">
+          <h1 className="font-serif text-5xl font-semibold text-white mb-6 max-w-3xl animate-fade-in-up">
             {homepage?.heroHeading || 'Welcome to West Croydon Methodist Church'}
           </h1>
-          <p className="text-paper/90 text-lg sm:text-xl mb-8 max-w-2xl animate-fade-in-up delay-100">
+          <p className="text-white/90 text-lg mb-8 max-w-2xl animate-fade-in-up delay-100">
             {homepage?.heroSubheading || 'A warm, welcoming community where everyone belongs.'}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up delay-200">
             <Link
               href="/visit"
-              className="bg-red text-paper rounded-md px-6 py-3 text-base sm:text-lg font-medium hover:bg-red-dark transition-colors text-center min-h-[48px] flex items-center justify-center"
+              className="bg-red text-white rounded-md px-6 py-3 text-base sm:text-lg font-medium hover:bg-red-dark transition-colors text-center min-h-[48px] flex items-center justify-center"
             >
               Plan your visit
             </Link>
             <Link
               href="/whats-on"
-              className="border-2 border-paper text-paper rounded-md px-6 py-3 text-base sm:text-lg font-medium hover:bg-paper/10 transition-colors text-center min-h-[48px] flex items-center justify-center"
+              className="border-2 border-white text-white rounded-md px-6 py-3 text-base sm:text-lg font-medium hover:bg-white/10 transition-colors text-center min-h-[48px] flex items-center justify-center"
             >
               What&apos;s on this week
             </Link>

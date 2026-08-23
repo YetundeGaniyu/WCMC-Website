@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { UtensilsCrossed, Scale, Heart } from 'lucide-react';
 import { client } from '@/lib/sanity/client';
 import { GET_TEAM_MEMBERS, pageImagesQuery } from '@/lib/sanity/queries';
 import { urlFor } from '@/lib/sanity/image';

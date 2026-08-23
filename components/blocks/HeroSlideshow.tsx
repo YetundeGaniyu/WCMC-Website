@@ -56,12 +56,12 @@ export default function HeroSlideshow({ images }: HeroSlideshowProps) {
       ))}
 
       {/* Dark overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-ink/70 to-ink/20" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/20" />
 
       {/* Previous button */}
       <button
         onClick={goToPrevious}
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors backdrop-blur-sm"
+        className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border-2 border-white/50 bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-sm"
         aria-label="Previous slide"
       >
         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,7 +72,7 @@ export default function HeroSlideshow({ images }: HeroSlideshowProps) {
       {/* Next button */}
       <button
         onClick={goToNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors backdrop-blur-sm"
+        className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border-2 border-white/50 bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-sm"
         aria-label="Next slide"
       >
         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -89,7 +89,7 @@ export default function HeroSlideshow({ images }: HeroSlideshowProps) {
             className={`w-3 h-3 rounded-full transition-all ${
               index === currentIndex
                 ? 'bg-white'
-                : 'bg-white/50 hover:bg-white/70'
+                : 'bg-white/40 hover:bg-white/60'
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
