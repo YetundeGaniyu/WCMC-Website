@@ -2,7 +2,7 @@ export const GET_SITE_SETTINGS = `*[_type == "siteSettings"][0]`;
 
 export const GET_HOMEPAGE = `*[_type == "homepage"][0]`;
 
-export const pageImagesQuery = `*[_type == "pageImages"][0] {
+export const pageImagesQuery = `*[_type == "pageImages"] | order(_updatedAt desc)[0] {
   aboutPageImage,
   visitPageImage,
   communityPageImage,
