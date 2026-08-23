@@ -287,17 +287,17 @@ export default async function HomePage() {
               </Link>
             </div>
             {pageImages?.homepageVisitImage?.asset ? (
-              <div className="aspect-square rounded-lg overflow-hidden relative">
+              <div className="relative w-full h-full min-h-[400px]">
                 <Image
-                  src={urlFor(pageImages.homepageVisitImage).url()}
-                  alt={pageImages.homepageVisitImage.alt || 'Come as you are'}
+                  src={urlFor(pageImages.homepageVisitImage).width(800).height(600).url()}
+                  alt={pageImages.homepageVisitImage.alt || 'Sunday service'}
                   fill
-                  className="object-cover"
+                  className="object-cover rounded-xl"
                 />
               </div>
             ) : (
-              <div className="aspect-square bg-gradient-to-br from-red-light to-gold-pale rounded-lg flex items-center justify-center">
-                <span className="text-ink-muted text-center px-4">Visit image placeholder</span>
+              <div className="w-full min-h-[400px] bg-gold-pale rounded-xl flex items-center justify-center">
+                <span className="text-ink-muted text-sm">Upload image in Studio → Page Images</span>
               </div>
             )}
           </div>
