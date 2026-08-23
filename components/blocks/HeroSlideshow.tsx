@@ -1,100 +1,96 @@
-'use client';
+'use client'
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { urlFor } from '@/lib/sanity/image';
-import type { SanityImage } from '@/types/sanity';
+import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
-interface HeroSlideshowProps {
-  images: SanityImage[];
-}
+export default function HeroSlideshow({ images, heading, subheading }: {
+  images: any[]
+  heading: string
+  subheading: string
+}) {
+  const [current, setCurrent] = useState(0)
 
-export default function HeroSlideshow({ images }: HeroSlideshowProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  // Auto-advance every 5 seconds
   useEffect(() => {
-    if (images.length <= 1) return;
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [images.length]);
-
-  const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
-
-  const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  };
-
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index);
-  };
+    if (images.length <= 1) return
+    const timer = setInterval(() => {
+      setCurrent(prev => (prev + 1) % images.length)
+    }, 5000)
+    return () => clearInterval(timer)
+  }, [images.length])
 
   return (
-    <div className="relative w-full h-full">
-      {/* Slideshow images */}
-      {images.map((image, index) => (
+    <div className="relative w-full h-[80vh] overflow-hidden">
+      {/* Images */}
+      {images.map((img, i) => (
         <div
-          key={index}
+          key={i}
           className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === currentIndex ? 'opacity-100' : 'opacity-0'
+            i === current ? 'opacity-100' : 'opacity-0'
           }`}
         >
           <Image
-            src={urlFor(image).url()}
-            alt={image.alt || 'Hero image'}
+            src={img.url}
+            alt={img.alt || heading}
             fill
             className="object-cover"
-            priority={index === 0}
+            priority={i === 0}
           />
         </div>
       ))}
 
-      {/* Dark overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/20" />
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/20 z-10" />
 
-      {/* Previous button */}
-      <button
-        onClick={goToPrevious}
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border-2 border-white/50 bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-sm"
-        aria-label="Previous slide"
-      >
-        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-
-      {/* Next button */}
-      <button
-        onClick={goToNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border-2 border-white/50 bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-sm"
-        aria-label="Next slide"
-      >
-        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-
-      {/* Dot indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-        {images.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
-              index === currentIndex
-                ? 'bg-white'
-                : 'bg-white/40 hover:bg-white/60'
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
+      {/* Content */}
+      <div className="absolute inset-0 z-20 flex items-center">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <h1 className="font-serif text-4xl sm:text-5xl font-semibold text-white max-w-2xl">
+            {heading}
+          </h1>
+          <p className="text-white/90 text-lg mt-4 max-w-xl">{subheading}</p>
+          <div className="flex gap-4 mt-8">
+            <a href="/visit" className="bg-red text-white px-6 py-3 rounded-md font-semibold hover:bg-red-dark transition-colors">
+              Plan your visit
+            </a>
+            <a href="/whats-on" className="border border-white text-white px-6 py-3 rounded-md font-semibold hover:bg-white/10 transition-colors">
+              What&apos;s on this week
+            </a>
+          </div>
+        </div>
       </div>
+
+      {/* Dots */}
+      {images.length > 1 && (
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              className={`w-2.5 h-2.5 rounded-full transition-all ${
+                i === current ? 'bg-white scale-125' : 'bg-white/40'
+              }`}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Arrows */}
+      {images.length > 1 && (
+        <>
+          <button
+            onClick={() => setCurrent(prev => (prev - 1 + images.length) % images.length)}
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full border border-white/50 text-white flex items-center justify-center hover:bg-white/20"
+          >
+            ‹
+          </button>
+          <button
+            onClick={() => setCurrent(prev => (prev + 1) % images.length)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full border border-white/50 text-white flex items-center justify-center hover:bg-white/20"
+          >
+            ›
+          </button>
+        </>
+      )}
     </div>
-  );
+  )
 }

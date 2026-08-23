@@ -35,61 +35,73 @@ export default async function HomePage() {
     return date.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit' });
   };
 
+  // Pre-resolve hero gallery URLs for client component
+  const heroImages = homepage?.heroGallery?.map((img: any) => ({
+    url: urlFor(img).width(1920).height(1080).url(),
+    alt: img.alt || ''
+  })) || [];
+
   return (
     <main className="min-h-screen bg-bg">
       {/* 1. Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center">
-        {/* Hero background */}
-        {homepage?.heroGallery && homepage.heroGallery.length >= 2 ? (
-          <HeroSlideshow images={homepage.heroGallery} />
-        ) : homepage?.heroGallery && homepage.heroGallery.length === 1 ? (
-          <div className="absolute inset-0">
-            <Image
-              src={urlFor(homepage.heroGallery[0]).url()}
-              alt={homepage.heroGallery[0].alt || 'Hero image'}
-              fill
-              className="object-cover"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/20" />
+      {homepage?.heroGallery && homepage.heroGallery.length >= 2 ? (
+        <HeroSlideshow
+          images={heroImages}
+          heading={homepage?.heroHeading || 'Welcome to West Croydon Methodist Church'}
+          subheading={homepage?.heroSubheading || 'A warm, welcoming community where everyone belongs.'}
+        />
+      ) : (
+        <section className="relative min-h-[80vh] flex items-center">
+          {/* Hero background */}
+          {homepage?.heroGallery && homepage.heroGallery.length === 1 ? (
+            <div className="absolute inset-0">
+              <Image
+                src={urlFor(homepage.heroGallery[0]).url()}
+                alt={homepage.heroGallery[0].alt || 'Hero image'}
+                fill
+                className="object-cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/20" />
+            </div>
+          ) : homepage?.heroImage?.asset ? (
+            <div className="absolute inset-0">
+              <Image
+                src={urlFor(homepage.heroImage).url()}
+                alt={homepage.heroImage.alt || 'Hero image'}
+                fill
+                className="object-cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/20" />
+            </div>
+          ) : (
+            <div className="absolute inset-0 bg-red" />
+          )}
+          <div className="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <h1 className="font-serif text-5xl font-semibold text-white mb-6 max-w-3xl animate-fade-in-up">
+              {homepage?.heroHeading || 'Welcome to West Croydon Methodist Church'}
+            </h1>
+            <p className="text-white/90 text-lg mb-8 max-w-2xl animate-fade-in-up delay-100">
+              {homepage?.heroSubheading || 'A warm, welcoming community where everyone belongs.'}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up delay-200">
+              <Link
+                href="/visit"
+                className="bg-red text-white rounded-md px-6 py-3 text-base sm:text-lg font-medium hover:bg-red-dark transition-colors text-center min-h-[48px] flex items-center justify-center"
+              >
+                Plan your visit
+              </Link>
+              <Link
+                href="/whats-on"
+                className="border-2 border-white text-white rounded-md px-6 py-3 text-base sm:text-lg font-medium hover:bg-white/10 transition-colors text-center min-h-[48px] flex items-center justify-center"
+              >
+                What&apos;s on this week
+              </Link>
+            </div>
           </div>
-        ) : homepage?.heroImage?.asset ? (
-          <div className="absolute inset-0">
-            <Image
-              src={urlFor(homepage.heroImage).url()}
-              alt={homepage.heroImage.alt || 'Hero image'}
-              fill
-              className="object-cover"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/20" />
-          </div>
-        ) : (
-          <div className="absolute inset-0 bg-red" />
-        )}
-        <div className="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <h1 className="font-serif text-5xl font-semibold text-white mb-6 max-w-3xl animate-fade-in-up">
-            {homepage?.heroHeading || 'Welcome to West Croydon Methodist Church'}
-          </h1>
-          <p className="text-white/90 text-lg mb-8 max-w-2xl animate-fade-in-up delay-100">
-            {homepage?.heroSubheading || 'A warm, welcoming community where everyone belongs.'}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up delay-200">
-            <Link
-              href="/visit"
-              className="bg-red text-white rounded-md px-6 py-3 text-base sm:text-lg font-medium hover:bg-red-dark transition-colors text-center min-h-[48px] flex items-center justify-center"
-            >
-              Plan your visit
-            </Link>
-            <Link
-              href="/whats-on"
-              className="border-2 border-white text-white rounded-md px-6 py-3 text-base sm:text-lg font-medium hover:bg-white/10 transition-colors text-center min-h-[48px] flex items-center justify-center"
-            >
-              What&apos;s on this week
-            </Link>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 2. Inclusivity Strip */}
       <section className="bg-ink text-paper py-6">
