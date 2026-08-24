@@ -24,19 +24,8 @@ export default async function HomePage() {
     client.fetch<PageImages>(pageImagesQuery, {}, { next: { revalidate: 60 } }),
   ]);
 
-  // Helper to format date
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
-  };
-
-  const formatTime = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit' });
-  };
-
   // Pre-resolve hero gallery URLs for client component
-  const heroImages = homepage?.heroGallery?.map((img: any) => ({
+  const heroImages = homepage?.heroGallery?.map((img: { alt?: string; asset?: { _ref?: string } }) => ({
     url: urlFor(img).width(1920).height(1080).url(),
     alt: img.alt || ''
   })) || [];
@@ -117,9 +106,10 @@ export default async function HomePage() {
       </section>
 
       {/* Welcome Section */}
-      <section className="py-16 bg-paper">
+      <section className="py-16 bg-gold-pale border-y border-line-soft">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
+            <div className="w-16 h-1 bg-red mx-auto mb-6 rounded-full" />
             <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-ink mb-6">
               Welcome to West Croydon Methodist Church
             </h2>
@@ -130,9 +120,6 @@ export default async function HomePage() {
               Whether you are exploring faith for the first time, looking for a church home, or simply want to connect with others — you are welcome here, just as you are.
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
-              <Link href="/visit" className="bg-red text-paper px-6 py-3 rounded-md font-semibold hover:bg-red-dark transition-colors">
-                Plan your visit
-              </Link>
               <Link href="/about" className="border border-red text-red px-6 py-3 rounded-md font-semibold hover:bg-gold-pale transition-colors">
                 Find out more
               </Link>
@@ -144,71 +131,65 @@ export default async function HomePage() {
       {/* 3. What's On Preview */}
       <section className="py-12 sm:py-16">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="font-serif text-2xl sm:text-3xl text-ink">What&apos;s On</h2>
-            <Link href="/whats-on" className="text-red hover:text-red-dark font-medium">
-              See all events →
-            </Link>
-          </div>
+          <h2 className="font-serif text-2xl sm:text-3xl text-ink mb-8">What&apos;s On</h2>
           {featuredEvents && featuredEvents.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featuredEvents.map((event, i) => (
-                <Link
-                  key={event._id}
-                  href={event.slug?.current ? `/whats-on/${event.slug.current}` : '/whats-on'}
-                  className="group animate-fade-in-up"
-                  style={{ animationDelay: `${i * 90}ms` }}
-                >
-                  <div className="bg-white shadow-card rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                    {/* Image or coloured placeholder */}
-                    <div className="aspect-video relative overflow-hidden">
-                      {event.image?.asset ? (
-                        <Image
-                          src={urlFor(event.image).width(600).height(340).url()}
-                          alt={event.title}
-                          fill
-                          className="object-cover"
-                        />
-                      ) : (
-                        <div className={`w-full h-full flex items-center justify-center
-                          ${event.category === 'service' ? 'bg-red/10' :
-                            event.category === 'youth' ? 'bg-gold/20' :
-                            event.category === 'special' ? 'bg-ink/10' :
-                            event.category === 'prayer' ? 'bg-gold-pale' :
-                            'bg-line-soft'}`}>
-                          <span className="font-serif text-2xl text-ink-muted">
-                            {new Date(event.startDateTime).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
-                          </span>
-                        </div>
-                      )}
+            <>
+              <div className="space-y-0 divide-y divide-line-soft">
+                {featuredEvents.map((event) => (
+                  <Link
+                    key={event._id}
+                    href="/whats-on"
+                    className="flex items-center gap-5 py-5 hover:bg-gold-pale/50 transition-colors px-4 rounded-lg group"
+                  >
+                    {/* Calendar date badge */}
+                    <div className="flex-shrink-0 w-14 text-center shadow-card rounded-lg overflow-hidden">
+                      <div className="bg-red text-paper text-xs font-mono uppercase tracking-widest py-1">
+                        {new Date(event.startDateTime).toLocaleDateString('en-GB', { month: 'short' })}
+                      </div>
+                      <div className="bg-paper border-x border-b border-line-soft text-ink font-serif text-2xl font-bold py-2">
+                        {new Date(event.startDateTime).getDate()}
+                      </div>
                     </div>
-                    {/* Card content */}
-                    <div className="p-4">
-                      <span className="text-xs font-mono uppercase tracking-widest text-gold">
-                        {event.category}
-                      </span>
-                      <h3 className="font-serif font-semibold text-ink mt-1">{event.title}</h3>
-                      <p className="text-sm text-ink-muted mt-1">
-                        {new Date(event.startDateTime).toLocaleDateString('en-GB', {
-                          weekday: 'short', day: 'numeric', month: 'long'
-                        })} · {new Date(event.startDateTime).toLocaleTimeString('en-GB', {
+
+                    {/* Event info */}
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-serif font-semibold text-ink group-hover:text-red transition-colors truncate">
+                        {event.title}
+                      </h3>
+                      <p className="text-sm text-ink-muted mt-0.5">
+                        {new Date(event.startDateTime).toLocaleTimeString('en-GB', {
                           hour: '2-digit', minute: '2-digit'
                         })}
+                        {event.location && ` · ${event.location}`}
                       </p>
-                      {event.location && (
-                        <p className="text-sm text-ink-muted">{event.location}</p>
+                      {event.isOnline && (
+                        <span className="text-xs text-gold font-semibold">📹 Online event</span>
                       )}
                     </div>
-                  </div>
+
+                    {/* Category + arrow */}
+                    <div className="flex-shrink-0 flex items-center gap-3">
+                      <span className="bg-gold-pale text-ink-muted text-xs font-mono uppercase tracking-widest px-3 py-1 rounded-full hidden sm:block">
+                        {event.category}
+                      </span>
+                      <span className="text-red text-lg">→</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+              {/* See all events link */}
+              <div className="text-center mt-8">
+                <Link href="/whats-on" className="bg-red text-paper px-6 py-3 rounded-md font-semibold hover:bg-red-dark transition-colors inline-block">
+                  See all events →
                 </Link>
-              ))}
-            </div>
+              </div>
+            </>
           ) : (
-            <div className="col-span-3 text-center py-12">
+            <div className="text-center py-12">
               <p className="text-ink-muted">No upcoming featured events.</p>
-              <a href="/whats-on" className="text-red text-sm mt-2 inline-block hover:underline">
+              <Link href="/whats-on" className="text-red text-sm mt-2 inline-block hover:underline">
                 See all events →
-              </a>
+              </Link>
             </div>
           )}
         </div>
@@ -261,11 +242,12 @@ export default async function HomePage() {
                 >
                   <div className="bg-white shadow-card rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
                     {post.heroImage?.asset ? (
-                      <div className="aspect-video bg-gray-100">
-                        <img
+                      <div className="aspect-video bg-gray-100 relative">
+                        <Image
                           src={urlFor(post.heroImage).url()}
                           alt={post.heroImage.alt || post.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>
                     ) : (
@@ -281,7 +263,7 @@ export default async function HomePage() {
                       )}
                       <h3 className="font-serif text-lg text-ink mb-2">{post.title}</h3>
                       <p className="text-ink-muted text-sm mb-2">
-                        {formatDate(post.publishedAt)}
+                        {new Date(post.publishedAt).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}
                       </p>
                       {post.author && (
                         <p className="text-ink-muted text-sm">By {post.author.name}</p>
