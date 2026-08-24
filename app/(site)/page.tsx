@@ -163,7 +163,31 @@ export default async function HomePage() {
                         {event.location && ` · ${event.location}`}
                       </p>
                       {event.isOnline && (
-                        <span className="text-xs text-gold font-semibold">📹 Online event</span>
+                        <div className="mt-2 bg-blue-50 border border-blue-100 rounded-md px-3 py-2 text-sm">
+                          <div className="flex items-center gap-2 text-blue-700 font-semibold mb-1">
+                            <span>📹</span> Online event
+                          </div>
+                          {event.onlineLink && (
+                            <a
+                              href={event.onlineLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-600 underline hover:text-blue-800 font-semibold block"
+                            >
+                              Join Zoom Meeting →
+                            </a>
+                          )}
+                          {event.zoomId && (
+                            <p className="text-ink-muted text-xs mt-1">
+                              Meeting ID: <span className="font-mono font-semibold text-ink">{event.zoomId}</span>
+                            </p>
+                          )}
+                          {event.zoomPassword && (
+                            <p className="text-ink-muted text-xs">
+                              Passcode: <span className="font-mono font-semibold text-ink">{event.zoomPassword}</span>
+                            </p>
+                          )}
+                        </div>
                       )}
                     </div>
 

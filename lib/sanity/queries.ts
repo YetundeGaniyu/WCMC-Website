@@ -10,12 +10,18 @@ export const pageImagesQuery = `*[_type == "pageImages"] | order(_updatedAt desc
 }`;
 
 export const GET_FEATURED_EVENTS = `*[_type == "event" && featured == true && startDateTime > now()] | order(startDateTime asc) [0...5] {
-  _id, title, startDateTime, location, category, isOnline, onlineLink
+  _id, title, startDateTime, location, category, isOnline, onlineLink, zoomId, zoomPassword
 }`;
 
 export const GET_EVENTS = `*[_type == "event" && defined(slug.current)] | order(startDateTime asc)`;
 
-export const GET_UPCOMING_EVENTS = `*[_type == "event" && startDateTime > now()] | order(startDateTime asc) [0...5]`;
+export const GET_UPCOMING_EVENTS = `*[_type == "event" && startDateTime > now()] | order(startDateTime asc) [0...5] {
+  _id, title, startDateTime, location, category, isOnline, onlineLink, zoomId, zoomPassword
+}`;
+
+export const GET_EVENTS_WITH_ZOOM = `*[_type == "event" && defined(slug.current)] | order(startDateTime asc) {
+  _id, title, startDateTime, location, category, isOnline, onlineLink, zoomId, zoomPassword
+}`;
 
 export const GET_EVENT_BY_SLUG = `*[_type == "event" && slug.current == $slug][0]`;
 

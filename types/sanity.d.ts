@@ -58,6 +58,8 @@ export interface Event {
   bookingUrl?: string;
   isOnline: boolean;
   onlineLink?: string;
+  zoomId?: string;
+  zoomPassword?: string;
   featured: boolean;
 }
 

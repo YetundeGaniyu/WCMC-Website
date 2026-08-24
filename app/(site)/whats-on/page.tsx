@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { client } from '@/lib/sanity/client';
-import { GET_EVENTS, GET_UPCOMING_EVENTS } from '@/lib/sanity/queries';
+import { GET_EVENTS_WITH_ZOOM, GET_UPCOMING_EVENTS } from '@/lib/sanity/queries';
 import SectionHeading from '@/components/ui/SectionHeading';
 import EventsCalendar from '@/components/blocks/EventsCalendar';
 import Pill from '@/components/ui/Pill';
@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function WhatsOnPage() {
   const [events, upcomingEvents] = await Promise.all([
-    client.fetch<Event[]>(GET_EVENTS, {}, { next: { revalidate: 60 } }),
+    client.fetch<Event[]>(GET_EVENTS_WITH_ZOOM, {}, { next: { revalidate: 60 } }),
     client.fetch<Event[]>(GET_UPCOMING_EVENTS, {}, { next: { revalidate: 60 } }),
   ]);
 

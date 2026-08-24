@@ -142,6 +142,20 @@ export const event = defineType({
       description: 'Zoom, Google Meet or Teams link',
       hidden: ({ document }) => !document?.isOnline,
     }),
+    defineField({
+      name: 'zoomId',
+      title: 'Zoom Meeting ID',
+      type: 'string',
+      description: 'e.g. 123 456 7890',
+      hidden: ({ document }) => !document?.isOnline,
+    }),
+    defineField({
+      name: 'zoomPassword',
+      title: 'Zoom Passcode',
+      type: 'string',
+      description: 'The meeting passcode',
+      hidden: ({ document }) => !document?.isOnline,
+    }),
     defineField({ name: 'featured',     title: 'Feature on Homepage?',         type: 'boolean', initialValue: false }),
   ],
   preview: {
