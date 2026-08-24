@@ -129,6 +129,19 @@ export const event = defineType({
     }),
     defineField({ name: 'contactEmail', title: 'Contact Email for this Event', type: 'string' }),
     defineField({ name: 'bookingUrl',   title: 'External Booking URL',         type: 'url' }),
+    defineField({
+      name: 'isOnline',
+      title: 'Online Event (Zoom/Virtual)?',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'onlineLink',
+      title: 'Online Meeting Link',
+      type: 'url',
+      description: 'Zoom, Google Meet or Teams link',
+      hidden: ({ document }) => !document?.isOnline,
+    }),
     defineField({ name: 'featured',     title: 'Feature on Homepage?',         type: 'boolean', initialValue: false }),
   ],
   preview: {

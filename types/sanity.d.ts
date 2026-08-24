@@ -56,6 +56,8 @@ export interface Event {
   image?: SanityImage;
   contactEmail?: string;
   bookingUrl?: string;
+  isOnline: boolean;
+  onlineLink?: string;
   featured: boolean;
 }
 

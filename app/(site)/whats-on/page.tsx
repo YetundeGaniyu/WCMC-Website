@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { client } from '@/lib/sanity/client';
 import { GET_EVENTS, GET_UPCOMING_EVENTS } from '@/lib/sanity/queries';
 import SectionHeading from '@/components/ui/SectionHeading';
-import EventsBoard from '@/components/blocks/EventsBoard';
+import EventsCalendar from '@/components/blocks/EventsCalendar';
 import Pill from '@/components/ui/Pill';
 import type { Event } from '@/types/sanity';
 
@@ -49,7 +49,7 @@ export default async function WhatsOnPage() {
       <section className="py-12 sm:py-16">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading>Upcoming Events</SectionHeading>
-          <EventsBoard events={events || []} />
+          <EventsCalendar events={events || []} />
         </div>
       </section>
 

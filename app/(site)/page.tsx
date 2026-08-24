@@ -116,6 +116,31 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Welcome Section */}
+      <section className="py-16 bg-paper">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-ink mb-6">
+              Welcome to West Croydon Methodist Church
+            </h2>
+            <p className="font-sans text-lg text-ink-muted leading-relaxed mb-4">
+              We are a warm, friendly and inclusive Christian community based in West Croydon, seeking to serve God and our neighbours. We meet for worship every Sunday at 10:30am with activities throughout the week.
+            </p>
+            <p className="font-sans text-lg text-ink-muted leading-relaxed mb-8">
+              Whether you are exploring faith for the first time, looking for a church home, or simply want to connect with others — you are welcome here, just as you are.
+            </p>
+            <div className="flex gap-4 justify-center flex-wrap">
+              <Link href="/visit" className="bg-red text-paper px-6 py-3 rounded-md font-semibold hover:bg-red-dark transition-colors">
+                Plan your visit
+              </Link>
+              <Link href="/about" className="border border-red text-red px-6 py-3 rounded-md font-semibold hover:bg-gold-pale transition-colors">
+                Find out more
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 3. What's On Preview */}
       <section className="py-12 sm:py-16">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
