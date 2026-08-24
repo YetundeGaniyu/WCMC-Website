@@ -13,6 +13,8 @@ export const GET_FEATURED_EVENTS = `*[_type == "event" && featured == true && de
 
 export const GET_EVENTS = `*[_type == "event" && defined(slug.current)] | order(startDateTime asc)`;
 
+export const GET_UPCOMING_EVENTS = `*[_type == "event" && startDateTime > now()] | order(startDateTime asc) [0...5]`;
+
 export const GET_EVENT_BY_SLUG = `*[_type == "event" && slug.current == $slug][0]`;
 
 export const GET_SERMONS = `*[_type == "sermon" && defined(slug.current)] | order(date desc)`;

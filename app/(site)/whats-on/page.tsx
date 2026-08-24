@@ -1,11 +1,10 @@
 import { Metadata } from 'next';
 import { client } from '@/lib/sanity/client';
-import { GET_EVENTS, GET_ALL_COMMUNITY_GROUPS } from '@/lib/sanity/queries';
+import { GET_EVENTS, GET_UPCOMING_EVENTS } from '@/lib/sanity/queries';
 import SectionHeading from '@/components/ui/SectionHeading';
 import EventsBoard from '@/components/blocks/EventsBoard';
-import Card from '@/components/ui/Card';
 import Pill from '@/components/ui/Pill';
-import type { Event, CommunityGroup } from '@/types/sanity';
+import type { Event } from '@/types/sanity';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -15,10 +14,24 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function WhatsOnPage() {
-  const [events, communityGroups] = await Promise.all([
+  const [events, upcomingEvents] = await Promise.all([
     client.fetch<Event[]>(GET_EVENTS, {}, { next: { revalidate: 60 } }),
-    client.fetch<CommunityGroup[]>(GET_ALL_COMMUNITY_GROUPS, {}, { next: { revalidate: 60 } }),
+    client.fetch<Event[]>(GET_UPCOMING_EVENTS, {}, { next: { revalidate: 60 } }),
   ]);
+
+  // Helper to format date badge
+  const formatDateBadge = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.toLocaleDateString('en-GB', { month: 'short' }).toUpperCase();
+    return `${day} ${month}`;
+  };
+
+  // Helper to format time
+  const formatTime = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit' });
+  };
 
   return (
     <main className="min-h-screen bg-bg">
@@ -40,53 +53,46 @@ export default async function WhatsOnPage() {
         </div>
       </section>
 
-      {/* Recurring Groups Section */}
-      {communityGroups && communityGroups.length > 0 ? (
-        <section className="py-12 sm:py-16 bg-paper">
-          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeading>Recurring Groups</SectionHeading>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {communityGroups.map((group) => (
-                <Card key={group._id} className="p-6">
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="font-serif font-semibold text-xl text-ink">{group.name}</h3>
-                    {group.open ? (
-                      <Pill>Open</Pill>
-                    ) : (
-                      <Pill>Full</Pill>
+      {/* Coming Up Section */}
+      <section className="py-12 sm:py-16 bg-paper">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading>Coming Up</SectionHeading>
+          {upcomingEvents && upcomingEvents.length > 0 ? (
+            <div className="space-y-0">
+              {upcomingEvents.map((event, index) => (
+                <div
+                  key={event._id}
+                  className={`flex gap-4 py-4 ${
+                    index < upcomingEvents.length - 1 ? 'border-b border-line-soft' : ''
+                  }`}
+                >
+                  {/* Date badge */}
+                  <div className="flex-shrink-0">
+                    <div className="bg-red text-paper rounded-md px-2 py-1 text-center min-w-[48px]">
+                      <span className="text-sm font-semibold">{formatDateBadge(event.startDateTime)}</span>
+                    </div>
+                  </div>
+                  {/* Event details */}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-ink mb-1">{event.title}</h3>
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-ink-muted">
+                      <span>{formatTime(event.startDateTime)}</span>
+                      {event.location && <span>• {event.location}</span>}
+                    </div>
+                    {event.category && (
+                      <div className="mt-2">
+                        <Pill>{event.category}</Pill>
+                      </div>
                     )}
                   </div>
-                  {group.category && <Pill className="mb-2">{group.category}</Pill>}
-                  {group.schedule && (
-                    <p className="font-sans text-gold text-sm mb-2">📅 {group.schedule}</p>
-                  )}
-                  {group.location && (
-                    <p className="font-sans text-ink-muted text-sm mb-2">📍 {group.location}</p>
-                  )}
-                  {group.description && (
-                    <p className="font-sans text-ink text-sm mb-4">{group.description}</p>
-                  )}
-                  {group.contactEmail && (
-                    <a
-                      href={`mailto:${group.contactEmail}`}
-                      className="text-gold text-sm hover:text-gold-light transition-colors"
-                    >
-                      Contact group
-                    </a>
-                  )}
-                </Card>
+                </div>
               ))}
             </div>
-          </div>
-        </section>
-      ) : (
-        <section className="py-12 sm:py-16 bg-paper">
-          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeading>Recurring Groups</SectionHeading>
-            <p className="font-sans text-ink-muted text-center py-8">No recurring groups listed yet</p>
-          </div>
-        </section>
-      )}
+          ) : (
+            <p className="font-sans text-ink-muted text-center py-8">No upcoming events — check back soon</p>
+          )}
+        </div>
+      </section>
     </main>
   );
 }
