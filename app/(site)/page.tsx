@@ -211,7 +211,7 @@ export default async function HomePage() {
                   <CommunityGroupCard
                     group={group}
                     isLink
-                    href={group.slug?.current ? `/community/${group.slug.current}` : '/community'}
+                    href="/community"
                   />
                 </div>
               ))}
