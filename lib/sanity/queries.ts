@@ -9,7 +9,7 @@ export const pageImagesQuery = `*[_type == "pageImages"] | order(_updatedAt desc
   homepageVisitImage
 }`;
 
-export const GET_FEATURED_EVENTS = `*[_type == "event" && featured == true && defined(slug.current)] | order(startDateTime asc) [0...3]`;
+export const GET_FEATURED_EVENTS = `*[_type == "event" && featured == true && startDateTime > now()] | order(startDateTime asc) [0...3]`;
 
 export const GET_EVENTS = `*[_type == "event" && defined(slug.current)] | order(startDateTime asc)`;
 

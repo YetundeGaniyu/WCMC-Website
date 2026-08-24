@@ -135,29 +135,43 @@ export default async function HomePage() {
                   style={{ animationDelay: `${i * 90}ms` }}
                 >
                   <div className="bg-white shadow-card rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                    {event.image?.asset ? (
-                      <div className="aspect-video bg-gray-100">
-                        <img
-                          src={urlFor(event.image).url()}
-                          alt={event.image.alt || event.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    {/* Image or coloured placeholder */}
+                    <div className="aspect-video relative overflow-hidden">
+                      {event.image?.asset ? (
+                        <Image
+                          src={urlFor(event.image).width(600).height(340).url()}
+                          alt={event.title}
+                          fill
+                          className="object-cover"
                         />
-                      </div>
-                    ) : (
-                      <div className="aspect-video bg-gold-pale flex items-center justify-center">
-                        <span className="text-ink-muted text-sm">No image</span>
-                      </div>
-                    )}
-                    <div className="p-4 sm:p-6">
-                      <span className="inline-block px-3 py-1 bg-gold-pale text-ink rounded-full text-xs sm:text-sm mb-3">
+                      ) : (
+                        <div className={`w-full h-full flex items-center justify-center
+                          ${event.category === 'service' ? 'bg-red/10' :
+                            event.category === 'youth' ? 'bg-gold/20' :
+                            event.category === 'special' ? 'bg-ink/10' :
+                            event.category === 'prayer' ? 'bg-gold-pale' :
+                            'bg-line-soft'}`}>
+                          <span className="font-serif text-2xl text-ink-muted">
+                            {new Date(event.startDateTime).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    {/* Card content */}
+                    <div className="p-4">
+                      <span className="text-xs font-mono uppercase tracking-widest text-gold">
                         {event.category}
                       </span>
-                      <h3 className="font-serif text-lg text-ink mb-2">{event.title}</h3>
-                      <p className="text-ink-muted text-sm">
-                        {formatDate(event.startDateTime)} · {formatTime(event.startDateTime)}
+                      <h3 className="font-serif font-semibold text-ink mt-1">{event.title}</h3>
+                      <p className="text-sm text-ink-muted mt-1">
+                        {new Date(event.startDateTime).toLocaleDateString('en-GB', {
+                          weekday: 'short', day: 'numeric', month: 'long'
+                        })} · {new Date(event.startDateTime).toLocaleTimeString('en-GB', {
+                          hour: '2-digit', minute: '2-digit'
+                        })}
                       </p>
                       {event.location && (
-                        <p className="text-ink-muted text-sm mt-1">{event.location}</p>
+                        <p className="text-sm text-ink-muted">{event.location}</p>
                       )}
                     </div>
                   </div>
@@ -165,7 +179,12 @@ export default async function HomePage() {
               ))}
             </div>
           ) : (
-            <p className="text-ink-muted text-center py-8">No featured events right now. Check back soon</p>
+            <div className="col-span-3 text-center py-12">
+              <p className="text-ink-muted">No upcoming featured events.</p>
+              <a href="/whats-on" className="text-red text-sm mt-2 inline-block hover:underline">
+                See all events →
+              </a>
+            </div>
           )}
         </div>
       </section>
