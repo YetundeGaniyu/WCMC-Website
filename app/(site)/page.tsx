@@ -13,6 +13,7 @@ import NewsletterSignup from '@/components/blocks/NewsletterSignup';
 import Reveal from '@/components/ui/Reveal';
 import CommunityGroupCard from '@/components/blocks/CommunityGroupCard';
 import HeroSlideshow from '@/components/blocks/HeroSlideshow';
+import FeaturedEventsList from '@/components/blocks/FeaturedEventsList';
 import type { Homepage, Event, CommunityGroup, Post, PageImages } from '@/types/sanity';
 
 export default async function HomePage() {
@@ -36,7 +37,7 @@ export default async function HomePage() {
       {homepage?.heroGallery && homepage.heroGallery.length >= 2 ? (
         <HeroSlideshow
           images={heroImages}
-          heading={homepage?.heroHeading || 'Welcome to West Croydon Methodist Church'}
+          heading={homepage?.heroHeading || 'West Croydon Methodist Church'}
           subheading={homepage?.heroSubheading || 'A warm, welcoming community where everyone belongs.'}
         />
       ) : (
@@ -69,7 +70,7 @@ export default async function HomePage() {
           )}
           <div className="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <h1 className="font-serif text-5xl font-semibold text-white mb-6 max-w-3xl animate-fade-in-up">
-              {homepage?.heroHeading || 'Welcome to West Croydon Methodist Church'}
+              {homepage?.heroHeading || 'West Croydon Methodist Church'}
             </h1>
             <p className="text-white/90 text-lg mb-8 max-w-2xl animate-fade-in-up delay-100">
               {homepage?.heroSubheading || 'A warm, welcoming community where everyone belongs.'}
@@ -114,7 +115,7 @@ export default async function HomePage() {
               Welcome to West Croydon Methodist Church
             </h2>
             <p className="font-sans text-lg text-ink-muted leading-relaxed mb-4">
-              We are a warm, friendly and inclusive Christian community based in West Croydon, seeking to serve God and our neighbours. We meet for worship every Sunday at 10:30am with activities throughout the week.
+              We are a warm, friendly and inclusive Christian community based in West Croydon, seeking to serve God and our neighbours. We meet for worship every Sunday at 11:00am with activities throughout the week.
             </p>
             <p className="font-sans text-lg text-ink-muted leading-relaxed mb-8">
               Whether you are exploring faith for the first time, looking for a church home, or simply want to connect with others — you are welcome here, just as you are.
@@ -134,73 +135,7 @@ export default async function HomePage() {
           <h2 className="font-serif text-2xl sm:text-3xl text-ink mb-8">What&apos;s On</h2>
           {featuredEvents && featuredEvents.length > 0 ? (
             <>
-              <div className="space-y-0 divide-y divide-line-soft">
-                {featuredEvents.map((event) => (
-                  <Link
-                    key={event._id}
-                    href="/whats-on"
-                    className="flex items-center gap-5 py-5 hover:bg-gold-pale/50 transition-colors px-4 rounded-lg group"
-                  >
-                    {/* Calendar date badge */}
-                    <div className="flex-shrink-0 w-14 text-center shadow-card rounded-lg overflow-hidden">
-                      <div className="bg-red text-paper text-xs font-mono uppercase tracking-widest py-1">
-                        {new Date(event.startDateTime).toLocaleDateString('en-GB', { month: 'short' })}
-                      </div>
-                      <div className="bg-paper border-x border-b border-line-soft text-ink font-serif text-2xl font-bold py-2">
-                        {new Date(event.startDateTime).getDate()}
-                      </div>
-                    </div>
-
-                    {/* Event info */}
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-serif font-semibold text-ink group-hover:text-red transition-colors truncate">
-                        {event.title}
-                      </h3>
-                      <p className="text-sm text-ink-muted mt-0.5">
-                        {new Date(event.startDateTime).toLocaleTimeString('en-GB', {
-                          hour: '2-digit', minute: '2-digit'
-                        })}
-                        {event.location && ` · ${event.location}`}
-                      </p>
-                      {event.isOnline && (
-                        <div className="mt-2 bg-blue-50 border border-blue-100 rounded-md px-3 py-2 text-sm">
-                          <div className="flex items-center gap-2 text-blue-700 font-semibold mb-1">
-                            <span>📹</span> Online event
-                          </div>
-                          {event.onlineLink && (
-                            <a
-                              href={event.onlineLink}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-600 underline hover:text-blue-800 font-semibold block"
-                            >
-                              Join Zoom Meeting →
-                            </a>
-                          )}
-                          {event.zoomId && (
-                            <p className="text-ink-muted text-xs mt-1">
-                              Meeting ID: <span className="font-mono font-semibold text-ink">{event.zoomId}</span>
-                            </p>
-                          )}
-                          {event.zoomPassword && (
-                            <p className="text-ink-muted text-xs">
-                              Passcode: <span className="font-mono font-semibold text-ink">{event.zoomPassword}</span>
-                            </p>
-                          )}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Category + arrow */}
-                    <div className="flex-shrink-0 flex items-center gap-3">
-                      <span className="bg-gold-pale text-ink-muted text-xs font-mono uppercase tracking-widest px-3 py-1 rounded-full hidden sm:block">
-                        {event.category}
-                      </span>
-                      <span className="text-red text-lg">→</span>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+              <FeaturedEventsList events={featuredEvents} />
               {/* See all events link */}
               <div className="text-center mt-8">
                 <Link href="/whats-on" className="bg-red text-paper px-6 py-3 rounded-md font-semibold hover:bg-red-dark transition-colors inline-block">

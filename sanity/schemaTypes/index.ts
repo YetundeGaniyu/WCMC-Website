@@ -120,6 +120,13 @@ export const event = defineType({
       description: 'e.g. FREQ=WEEKLY;BYDAY=SU — used to generate the iCal feed',
       hidden: ({ document }) => !document?.isRecurring,
     }),
+    defineField({
+      name: 'recurrenceLabel',
+      title: 'Recurrence Label',
+      type: 'string',
+      description: 'e.g. "Every Wednesday, 7:30pm" — shown on the event card',
+      hidden: ({ document }) => !document?.isRecurring,
+    }),
     defineField({ name: 'location',    title: 'Location',    type: 'string', description: 'Room name or external venue' }),
     defineField({ name: 'description', title: 'Description', type: 'text', rows: 4 }),
     defineField({

@@ -51,6 +51,7 @@ export interface Event {
   endDateTime?: string;
   isRecurring: boolean;
   recurrenceRule?: string;
+  recurrenceLabel?: string;
   location?: string;
   description?: string;
   image?: SanityImage;

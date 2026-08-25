@@ -110,8 +110,16 @@ export default function EventsCalendar({ events }: EventsCalendarProps) {
                       {event.location || 'TBD'}
                     </p>
                     <p className="text-ink-muted text-sm">{time}</p>
+                    {event.isRecurring && event.recurrenceLabel && (
+                      <span className="text-xs text-gold font-semibold flex items-center gap-1 mt-1">
+                        🔁 {event.recurrenceLabel}
+                      </span>
+                    )}
                     {event.isOnline && (
-                      <div className="mt-2 bg-blue-50 border border-blue-100 rounded-md px-3 py-2 text-sm">
+                      <div
+                        className="mt-2 bg-blue-50 border border-blue-100 rounded-md px-3 py-2 text-sm"
+                        onClick={(e) => e.stopPropagation()}
+                      >
                         <div className="flex items-center gap-2 text-blue-700 font-semibold mb-1">
                           <span>📹</span> Online event
                         </div>
