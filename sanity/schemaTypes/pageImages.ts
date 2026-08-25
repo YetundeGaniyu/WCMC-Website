@@ -3,7 +3,7 @@
  * Separate schema for page-specific images
  */
 
-import { defineField, defineType } from 'sanity'
+import { defineField, defineType, defineArrayMember } from 'sanity'
 
 export const pageImages = defineType({
   name: 'pageImages',
@@ -43,6 +43,22 @@ export const pageImages = defineType({
       options: { hotspot: true },
       fields: [defineField({ name: 'alt', type: 'string', title: 'Alt text' })],
       description: 'Image shown in the "Come as you are" section on the Homepage',
+    }),
+    defineField({
+      name: 'facilitiesGallery',
+      title: 'Facilities Gallery',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            defineField({ name: 'alt', type: 'string', title: 'Alt text / Caption',
+              description: 'e.g. "Main hall", "Car park", "Kitchen"' })
+          ]
+        })
+      ],
+      description: 'Upload photos of church facilities — hall, car park, kitchen, toilets etc.'
     }),
   ],
   preview: {

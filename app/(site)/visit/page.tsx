@@ -128,6 +128,32 @@ export default async function VisitPage() {
         </div>
       </section>
 
+      {/* Facilities Gallery */}
+      {pageImages?.facilitiesGallery && pageImages.facilitiesGallery.length > 0 && (
+        <section className="py-16 bg-paper">
+          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="font-serif text-3xl font-semibold text-ink mb-8">Our Facilities</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {pageImages.facilitiesGallery.map((image, i) => (
+                <div key={i} className="relative aspect-square rounded-xl overflow-hidden shadow-card group">
+                  <Image
+                    src={urlFor(image).width(400).height(400).url()}
+                    alt={image.alt || 'Church facility'}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  {image.alt && (
+                    <div className="absolute bottom-0 left-0 right-0 bg-ink/60 text-paper text-xs text-center py-2 font-sans">
+                      {image.alt}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Kids & Young People */}
       <section className="py-12 sm:py-16 bg-paper">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">

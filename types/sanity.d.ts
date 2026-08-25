@@ -135,4 +135,5 @@ export interface PageImages {
   visitPageImage?: SanityImage;
   communityPageImage?: SanityImage;
   homepageVisitImage?: SanityImage;
+  facilitiesGallery?: SanityImage[];
 }

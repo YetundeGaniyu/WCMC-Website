@@ -6,7 +6,8 @@ export const pageImagesQuery = `*[_type == "pageImages"] | order(_updatedAt desc
   aboutPageImage,
   visitPageImage,
   communityPageImage,
-  homepageVisitImage
+  homepageVisitImage,
+  facilitiesGallery
 }`;
 
 export const GET_FEATURED_EVENTS = `*[_type == "event" && featured == true && startDateTime > now()] | order(startDateTime asc) [0...5] {
